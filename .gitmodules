@@ -1,3 +1,4 @@
 [submodule "SDKabu"]
 	path = SDKabu
 	url = https://github.com/Kabourlix/SDKabu.git
+	recurse=true
