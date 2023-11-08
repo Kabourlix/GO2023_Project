@@ -2,7 +2,8 @@
     "name": "RContent",
     "rootNamespace": "Rezoskour.Content",
     "references": [
-        "KUtils"
+        "KCore",
+        "KCharacter"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
