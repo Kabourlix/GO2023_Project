@@ -15,59 +15,78 @@ namespace Rezoskour.Content
         Test
     }
 
-    public interface IEnemy : IDisposable
-    {
-        public EnemyType Type { get; }
-        public void Initialize(EnemyData _data, Vector2 _position, Quaternion _rotation);
-        public void SetActive(bool _isActive);
-
-        public void Attack(IKHealth _health);
-    }
-
-    public class Enemy : MonoBehaviour, IEnemy, IKHealth, IKActor
+    public abstract class Enemy : MonoBehaviour, IDisposable, IKActor, IKHealth
     {
         #region Events
-        public event Action<string>? OnActorDie;
-        public event Action<string>? OnIncomingDamage;
+        /// <inheritdoc />
+        public event Action<IKActor>? OnActorDie;
+        /// <inheritdoc />
+        public event Action<IKActor>? OnIncomingDamage;
+        /// <inheritdoc />
         public event Action<int>? OnHealthChanged;
+        /// <inheritdoc />
         public event Action<int>? OnMaxHealthChanged;
         #endregion
 
-        public EnemyType Type => EnemyType.Basic;
-        public Guid ID { get; } = Guid.NewGuid();
+        public Guid ID => Guid.NewGuid(); //REVIEW : Might need to be regenerated on initialization.
+        public abstract EnemyType Type { get; }
 
-        public int Health { get; private set; }
-        public int MaxHealth { get; private set; }
+        public int Health { get; protected set; }
+        public int MaxHealth { get; protected set; }
         public float HealthPercentage => (float)Health / MaxHealth;
 
-        public void Initialize(EnemyData _data, Vector2 _position, Quaternion _rotation)
+        protected EnemyData? data = null;
+
+        public virtual void Initialize(EnemyData _data, Vector2 _position, Quaternion _rotation)
         {
+            data = _data;
+            Health = data.MaxHealth;
+            MaxHealth = data.MaxHealth;
+
+            gameObject.transform.SetPositionAndRotation(_position, _rotation);
+        }
+
+        /// <inheritdoc />
+        public virtual void Dispose()
+        {
+            data = null;
+            Health = 0;
+            MaxHealth = 0;
         }
 
         public void SetActive(bool _isActive) => gameObject.SetActive(_isActive);
 
-        /// <inheritdoc />
-        public void Attack(IKHealth _health)
-        {
-        }
-
-        /// <inheritdoc />
-        public void Dispose()
-        {
-        }
+        public abstract void Attack(IKHealth _health);
 
         #region Health
+        /// <inheritdoc />
+        public void Heal(int _brutAmount, Func<int, int>? _amountModifierFunc = null)
+        {
+            int newAmount = _brutAmount;
+            if (_amountModifierFunc != null)
+            {
+                newAmount = _amountModifierFunc(_brutAmount);
+            }
+            //TODO : To be refactored.
+        }
+
         /// <inheritdoc />
         public void TakeDamage(int _brutAmount, Func<int, int>? _amountModifierFunc = null)
         {
             throw new NotImplementedException();
         }
+        #endregion
+    }
+
+    public class BasicEnemy : Enemy
+    {
+        /// <inheritdoc />
+        public override EnemyType Type => EnemyType.Basic;
 
         /// <inheritdoc />
-        public void Heal(int _brutAmount, Func<int, int>? _amountModifierFunc = null)
+        public override void Attack(IKHealth _health)
         {
             throw new NotImplementedException();
         }
-        #endregion
     }
 }

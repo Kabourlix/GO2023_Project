@@ -16,21 +16,21 @@ namespace Rezoskour.Content
         /// </summary>
         public bool IsThereEnemy { get; }
 
-        public event Action<IEnemy>? OnEnemySpawn;
+        public event Action<Enemy>? OnEnemySpawn;
         public event Action? OnEnemiesCleared;
 
-        public IEnemy SpawnEnemy(EnemyData _data, Vector2 _position, Quaternion _rotation);
-        public void ReleaseEnemy(IEnemy _enemy);
+        public Enemy SpawnEnemy(EnemyData _data, Vector2 _position, Quaternion _rotation);
+        public void ReleaseEnemy(Enemy _enemy);
     }
 
     internal class EnemyManager : IEnemyManager
     {
-        private readonly List<IEnemy> currentEnemies = new();
+        private readonly List<Enemy> currentEnemies = new();
         /// <inheritdoc />
         public bool IsThereEnemy => currentEnemies.Count == 0;
 
         /// <inheritdoc />
-        public event Action<IEnemy>? OnEnemySpawn;
+        public event Action<Enemy>? OnEnemySpawn;
         /// <inheritdoc />
         public event Action? OnEnemiesCleared;
 
@@ -51,10 +51,10 @@ namespace Rezoskour.Content
         }
 
         /// <inheritdoc />
-        public IEnemy SpawnEnemy(EnemyData _data, Vector2 _position, Quaternion _rotation)
+        public Enemy SpawnEnemy(EnemyData _data, Vector2 _position, Quaternion _rotation)
         {
             //Spawn an enemy
-            IEnemy enemy = enemyFactoryPerType[_data.Type].Get();
+            Enemy enemy = enemyFactoryPerType[_data.Type].Get();
 
             enemy.Initialize(_data, _position, _rotation);
             currentEnemies.Add(enemy);
@@ -62,7 +62,7 @@ namespace Rezoskour.Content
         }
 
         /// <inheritdoc />
-        public void ReleaseEnemy(IEnemy _enemy)
+        public void ReleaseEnemy(Enemy _enemy)
         {
             if (!currentEnemies.Contains(_enemy))
             {

@@ -10,24 +10,24 @@ namespace Rezoskour.Content
     //We could have a factory per difficulty level or only
     internal abstract class EnemyFactory : IDisposable
     {
-        protected ObjectPool<IEnemy> enemyPool;
+        protected ObjectPool<Enemy> enemyPool;
 
         public EnemyFactory(int _defaultCapacity = 5, int _maxCapacity = 50)
         {
-            enemyPool = new ObjectPool<IEnemy>(OnCreateEnemy, OnGetEnemy, OnReleaseEnemy, null, true, _defaultCapacity, _maxCapacity);
+            enemyPool = new ObjectPool<Enemy>(OnCreateEnemy, OnGetEnemy, OnReleaseEnemy, null, true, _defaultCapacity, _maxCapacity);
         }
 
-        public IEnemy Get() => enemyPool.Get();
-        public void Release(IEnemy _enemy) => enemyPool.Release(_enemy);
+        public Enemy Get() => enemyPool.Get();
+        public void Release(Enemy _enemy) => enemyPool.Release(_enemy);
 
-        protected abstract IEnemy OnCreateEnemy();
+        protected abstract Enemy OnCreateEnemy();
 
-        protected virtual void OnGetEnemy(IEnemy _enemy)
+        protected virtual void OnGetEnemy(Enemy _enemy)
         {
             _enemy.SetActive(true);
         }
 
-        protected virtual void OnReleaseEnemy(IEnemy _enemy)
+        protected virtual void OnReleaseEnemy(Enemy _enemy)
         {
             _enemy.Dispose();
             _enemy.SetActive(false);
