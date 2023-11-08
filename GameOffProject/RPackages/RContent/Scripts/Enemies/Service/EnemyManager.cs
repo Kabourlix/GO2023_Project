@@ -12,14 +12,14 @@ namespace Rezoskour.Content
     internal interface IEnemyManager : IKService
     {
         /// <summary>
-        /// Wether or not enemies are still present in the room.
+        /// Whether or not enemies are still present in the room.
         /// </summary>
         public bool IsThereEnemy { get; }
 
-        public event Action<IEnemy> OnEnemySpawn;
-        public event Action OnEnemiesCleared;
+        public event Action<IEnemy>? OnEnemySpawn;
+        public event Action? OnEnemiesCleared;
 
-        public IEnemy SpawnEnemy(EnemyType _type, Vector2 _position, Quaternion _rotation);
+        public IEnemy SpawnEnemy(EnemyData _data, Vector2 _position, Quaternion _rotation);
         public void ReleaseEnemy(IEnemy _enemy);
     }
 
@@ -51,12 +51,12 @@ namespace Rezoskour.Content
         }
 
         /// <inheritdoc />
-        public IEnemy SpawnEnemy(EnemyType _type, Vector2 _position, Quaternion _rotation)
+        public IEnemy SpawnEnemy(EnemyData _data, Vector2 _position, Quaternion _rotation)
         {
             //Spawn an enemy
-            IEnemy enemy = enemyFactoryPerType[_type].Get();
+            IEnemy enemy = enemyFactoryPerType[_data.Type].Get();
 
-            enemy.Initialize(_position, _rotation);
+            enemy.Initialize(_data, _position, _rotation);
             currentEnemies.Add(enemy);
             return enemy;
         }

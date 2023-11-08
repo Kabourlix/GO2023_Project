@@ -7,6 +7,7 @@ using UnityEngine.Pool;
 
 namespace Rezoskour.Content
 {
+    //We could have a factory per difficulty level or only
     internal abstract class EnemyFactory : IDisposable
     {
         protected ObjectPool<IEnemy> enemyPool;

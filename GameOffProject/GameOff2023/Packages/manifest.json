@@ -2,6 +2,7 @@
   "dependencies": {
     "com.rezoskour.gameoff.content" : "file:../../RPackages/RContent",
     "com.sdkabu.kcore" : "file:../../../SDKabu/KPackages/KCore",
+    "com.sdkabu.kcore.sample" : "file:../../../SDKabu/KPackages/KCoreSample",
     "com.sdkabu.kcharacter" : "file:../../../SDKabu/KPackages/KCharacter",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.ide.rider": "3.0.25",
