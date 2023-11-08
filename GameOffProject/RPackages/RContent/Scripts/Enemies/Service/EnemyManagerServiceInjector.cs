@@ -2,6 +2,7 @@
 
 
 #nullable enable
+using System;
 using SDKabu.KCore;
 using UnityEngine;
 
@@ -13,6 +14,11 @@ namespace Rezoskour.Content
         {
             IEnemyManager manager = new EnemyManager();
             KServiceInjection.Add<IEnemyManager>(manager);
+        }
+
+        private void OnDestroy()
+        {
+            KServiceInjection.Remove<IEnemyManager>();
         }
     }
 }
