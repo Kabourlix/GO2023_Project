@@ -18,7 +18,13 @@ namespace Rezoskour.Content
         public event Action<Enemy>? OnEnemySpawn;
         public event Action? OnEnemiesCleared;
 
-        public Enemy SpawnEnemy(Vector2 _position, Quaternion _rotation, EnemyData? _data = null);
+        public Enemy SpawnEnemy(EnemyData _data, Vector2 _position, Quaternion _rotation);
+
+        /// <summary>
+        /// Spawn an enemy by type with its default data.
+        /// </summary>
+        public Enemy SpawnEnemy(EnemyType _type, Vector2 _position, Quaternion _rotation);
+
         public void ReleaseEnemy(Enemy _enemy);
     }
 
@@ -63,7 +69,7 @@ namespace Rezoskour.Content
         }
 
         /// <inheritdoc />
-        public Enemy SpawnEnemy(Vector2 _position, Quaternion _rotation, EnemyData? _data = null)
+        public Enemy SpawnEnemy(EnemyData _data, Vector2 _position, Quaternion _rotation)
         {
             //Spawn an enemy
             Enemy enemy = enemyFactoryPerType[_data.Type].Get();
@@ -74,10 +80,23 @@ namespace Rezoskour.Content
         }
 
         /// <inheritdoc />
+        public Enemy SpawnEnemy(EnemyType _type, Vector2 _position, Quaternion _rotation)
+        {
+            //Spawn an enemy
+            Enemy enemy = enemyFactoryPerType[_type].Get();
+
+            enemy.Initialize(_position, _rotation);
+            currentEnemies.Add(enemy);
+            return enemy;
+        }
+
+        /// <inheritdoc />
         public void ReleaseEnemy(Enemy _enemy)
         {
             if (!currentEnemies.Contains(_enemy))
             {
+                Debug.LogWarning(
+                    $"{_enemy.name} (type {_enemy.Type}) is not in the current enemies list. Can't release it.");
                 return;
             }
 

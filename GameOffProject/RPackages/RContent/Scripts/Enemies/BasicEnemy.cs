@@ -37,7 +37,7 @@ namespace Rezoskour.Content
 
         public override void Attack(IKHealth _health)
         {
-            //Nothing
+            //Nothing, rely on collision.
         }
 
         public override void MoveTo(Vector2 _pos)
@@ -48,10 +48,13 @@ namespace Rezoskour.Content
 
         private void OnCollisionEnter2D(Collision2D _other)
         {
-            if (_other.gameObject.TryGetComponent(out IKHealth healthComp))
+            if (!_other.gameObject.TryGetComponent(out IKActor actor))
             {
-                Attack(healthComp);
+                return;
             }
+
+            Attack(actor.HealthComp);
+            HealthComp.TakeDamage(100); //TODO : Use a better value
         }
     }
 }

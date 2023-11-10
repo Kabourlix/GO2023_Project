@@ -4,6 +4,7 @@
 
 using System;
 using SDKabu.KCharacter;
+using SDKabu.KCore;
 using UnityEngine;
 
 namespace Rezoskour.Content
@@ -23,6 +24,7 @@ namespace Rezoskour.Content
         public KHealthComp HealthComp { get; private set; } = null!;
         protected EnemyData data = null!;
         protected Collider2D collider = null!;
+        private EnemyManager manager = null!;
 
         protected virtual void Awake()
         {
@@ -30,18 +32,11 @@ namespace Rezoskour.Content
             data = defaultData;
         }
 
-        public virtual void Initialize(Vector2 _position, Quaternion _rotation, EnemyData? _data = null)
+        protected void Start()
         {
-            data = _data == null ? defaultData : _data;
-            HealthComp = new KHealthComp(data.MaxHealth, this);
-
-            gameObject.transform.SetPositionAndRotation(_position, _rotation);
-        }
-
-        /// <inheritdoc />
-        public virtual void Dispose()
-        {
-            HealthComp.Dispose();
+            manager = KServiceInjection.Get<IEnemyManager>() as EnemyManager ??
+                      throw new NullReferenceException("No enemy manager found on enemy start");
+            Initialize(Vector2.zero, Quaternion.identity);
         }
 
         protected virtual void Update()
@@ -49,10 +44,34 @@ namespace Rezoskour.Content
             Strategy();
         }
 
+        public virtual void Initialize(Vector2 _position, Quaternion _rotation, EnemyData? _data = null)
+        {
+            data = _data == null ? defaultData : _data;
+            HealthComp = new KHealthComp(data.MaxHealth, this);
+
+            HealthComp.OnActorDie += HandleDeath;
+
+            gameObject.transform.SetPositionAndRotation(_position, _rotation);
+        }
+
+        /// <inheritdoc />
+        public virtual void Dispose()
+        {
+            HealthComp.OnActorDie -= HandleDeath;
+            HealthComp.Dispose();
+        }
+
         public void SetActive(bool _isActive) => gameObject.SetActive(_isActive);
 
         public abstract void Attack(IKHealth _health);
+
         public abstract void MoveTo(Vector2 _pos);
+
         public abstract void Strategy();
+
+        protected virtual void HandleDeath(IKActor _actor)
+        {
+            manager.ReleaseEnemy(this);
+        }
     }
 }
