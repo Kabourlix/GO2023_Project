@@ -2,7 +2,9 @@
 
 #nullable enable
 
+using System;
 using SDKabu.KCharacter;
+using SDKabu.KCore;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +15,25 @@ namespace Rezoskour.Content
     public class BasicEnemy : Enemy
     {
         public override EnemyType Type => EnemyType.Basic;
+        private Transform? playerTransform;
+
+        public override void Initialize(Vector2 _position, Quaternion _rotation, EnemyData? _data = null)
+        {
+            base.Initialize(_position, _rotation, _data);
+
+            playerTransform = KServiceInjection.Get<IGameManager>()?.PlayerTransform;
+        }
+
+        public override void Strategy()
+        {
+            if (playerTransform == null)
+            {
+                Debug.Log("Null");
+                return;
+            }
+
+            MoveTo(playerTransform.position);
+        }
 
         public override void Attack(IKHealth _health)
         {
@@ -23,13 +44,6 @@ namespace Rezoskour.Content
         {
             transform.position = Vector2.MoveTowards(transform.position,
                 _pos, data.Speed * Time.deltaTime);
-        }
-
-        public override void Strategy()
-        {
-            Vector2 mousePos = Mouse.current.position.ReadValue();
-
-            MoveTo(mousePos);
         }
 
         private void OnCollisionEnter2D(Collision2D _other)
