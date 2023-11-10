@@ -1,5 +1,4 @@
-// Copyright (c) Asobo Studio, All rights reserved. www.asobostudio.com
-
+// Created by Kabourlix Cendrée on 10/11/2023
 
 using UnityEngine;
 
@@ -16,5 +15,8 @@ namespace Rezoskour.Content
 
         [SerializeField] private int damage = 1;
         public int Damage => damage;
+
+        [SerializeField] private float speed = 1f;
+        public float Speed => speed;
     }
 }

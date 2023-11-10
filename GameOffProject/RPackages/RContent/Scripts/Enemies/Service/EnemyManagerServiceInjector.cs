@@ -11,10 +11,11 @@ namespace Rezoskour.Content
     internal class EnemyManagerServiceInjector : MonoBehaviour
     {
         [SerializeField] private Enemy[] enemies = Array.Empty<Enemy>();
+        [SerializeField] private Transform enemyParent = null!;
 
         private void Awake()
         {
-            IEnemyManager manager = new EnemyManager(GeneratePrefabPerType());
+            IEnemyManager manager = new EnemyManager(GeneratePrefabPerType(), enemyParent);
             KServiceInjection.Add<IEnemyManager>(manager);
         }
 

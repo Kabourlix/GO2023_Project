@@ -4,6 +4,7 @@
 
 using SDKabu.KCharacter;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // Created by Kabourlix Cendrée on 10/11/2023
 
@@ -15,17 +16,28 @@ namespace Rezoskour.Content
 
         public override void Attack(IKHealth _health)
         {
-            throw new System.NotImplementedException();
+            //Nothing
         }
 
         public override void MoveTo(Vector2 _pos)
         {
-            throw new System.NotImplementedException();
+            transform.position = Vector2.MoveTowards(transform.position,
+                _pos, data.Speed * Time.deltaTime);
         }
 
         public override void Strategy()
         {
-            throw new System.NotImplementedException();
+            Vector2 mousePos = Mouse.current.position.ReadValue();
+
+            MoveTo(mousePos);
+        }
+
+        private void OnCollisionEnter2D(Collision2D _other)
+        {
+            if (_other.gameObject.TryGetComponent(out IKHealth healthComp))
+            {
+                Attack(healthComp);
+            }
         }
     }
 }

@@ -16,17 +16,24 @@ namespace Rezoskour.Content
 
     public abstract class Enemy : MonoBehaviour, IDisposable, IKActor
     {
+        [SerializeField] private EnemyData defaultData = null!;
+
         public Guid ID { get; } = Guid.NewGuid(); //REVIEW : Might need to be regenerated on initialization.
         public abstract EnemyType Type { get; }
-
         public KHealthComp HealthComp { get; private set; } = null!;
+        protected EnemyData data = null!;
+        protected Collider2D collider = null!;
 
-        protected EnemyData? data = null;
-
-        public virtual void Initialize(EnemyData _data, Vector2 _position, Quaternion _rotation)
+        protected virtual void Awake()
         {
-            data = _data;
-            HealthComp = new KHealthComp(_data.MaxHealth, this);
+            collider = GetComponent<Collider2D>();
+            data = defaultData;
+        }
+
+        public virtual void Initialize(Vector2 _position, Quaternion _rotation, EnemyData? _data = null)
+        {
+            data = _data == null ? defaultData : _data;
+            HealthComp = new KHealthComp(data.MaxHealth, this);
 
             gameObject.transform.SetPositionAndRotation(_position, _rotation);
         }
@@ -34,7 +41,6 @@ namespace Rezoskour.Content
         /// <inheritdoc />
         public virtual void Dispose()
         {
-            data = null;
             HealthComp.Dispose();
         }
 

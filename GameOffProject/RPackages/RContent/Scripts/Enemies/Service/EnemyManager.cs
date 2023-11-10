@@ -18,7 +18,7 @@ namespace Rezoskour.Content
         public event Action<Enemy>? OnEnemySpawn;
         public event Action? OnEnemiesCleared;
 
-        public Enemy SpawnEnemy(EnemyData _data, Vector2 _position, Quaternion _rotation);
+        public Enemy SpawnEnemy(Vector2 _position, Quaternion _rotation, EnemyData? _data = null);
         public void ReleaseEnemy(Enemy _enemy);
     }
 
@@ -37,13 +37,13 @@ namespace Rezoskour.Content
 
         private Dictionary<EnemyType, EnemyFactory> enemyFactoryPerType = new();
 
-        public EnemyManager(Dictionary<EnemyType, GameObject> _prefabPerType)
+        public EnemyManager(Dictionary<EnemyType, GameObject> _prefabPerType, Transform _enemyParent)
         {
             foreach (KeyValuePair<EnemyType, GameObject> kvPair in _prefabPerType)
             {
                 EnemyType type = kvPair.Key;
                 GameObject prefab = kvPair.Value;
-                EnemyFactory? factory = EnemyFactory.Create(type, prefab);
+                EnemyFactory? factory = EnemyFactory.Create(type, prefab, _enemyParent);
                 if (factory is null)
                 {
                     continue;
@@ -63,12 +63,12 @@ namespace Rezoskour.Content
         }
 
         /// <inheritdoc />
-        public Enemy SpawnEnemy(EnemyData _data, Vector2 _position, Quaternion _rotation)
+        public Enemy SpawnEnemy(Vector2 _position, Quaternion _rotation, EnemyData? _data = null)
         {
             //Spawn an enemy
             Enemy enemy = enemyFactoryPerType[_data.Type].Get();
 
-            enemy.Initialize(_data, _position, _rotation);
+            enemy.Initialize(_position, _rotation, _data);
             currentEnemies.Add(enemy);
             return enemy;
         }

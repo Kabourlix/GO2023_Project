@@ -12,21 +12,25 @@ namespace Rezoskour.Content
     {
         protected ObjectPool<Enemy> enemyPool;
         protected GameObject enemyPrefab;
+        protected Transform enemyParent;
 
-        public EnemyFactory(GameObject _enemyPrefab, int _defaultCapacity = 5, int _maxCapacity = 50)
+        public EnemyFactory(GameObject _enemyPrefab, Transform _enemyParent, int _defaultCapacity = 5,
+            int _maxCapacity = 50)
         {
             enemyPrefab = _enemyPrefab;
+            enemyParent = _enemyParent;
             enemyPool = new ObjectPool<Enemy>(OnCreateEnemy, OnGetEnemy, OnReleaseEnemy, null, true, _defaultCapacity,
                 _maxCapacity);
         }
 
-        public static EnemyFactory? Create(EnemyType _type, GameObject _enemyPrefab, int _defaultCapacity = 5,
+        public static EnemyFactory? Create(EnemyType _type, GameObject _enemyPrefab, Transform _enemyParent,
+            int _defaultCapacity = 5,
             int _maxCapacity = 50)
         {
             switch (_type)
             {
                 case EnemyType.Basic:
-                    return new BasicEnemyFactory(_enemyPrefab, _defaultCapacity, _maxCapacity);
+                    return new BasicEnemyFactory(_enemyPrefab, _defaultCapacity, _maxCapacity, _enemyParent);
                 default:
                     Debug.LogError("No factory for this type of enemy");
                     return null;
@@ -53,19 +57,6 @@ namespace Rezoskour.Content
         public void Dispose()
         {
             enemyPool.Dispose();
-        }
-    }
-
-    internal class BasicEnemyFactory : EnemyFactory
-    {
-        public BasicEnemyFactory(GameObject _enemyPrefab, int _defaultCapacity, int _maxCapacity) : base(_enemyPrefab,
-            _defaultCapacity, _maxCapacity)
-        {
-        }
-
-        protected override Enemy OnCreateEnemy()
-        {
-            throw new NotImplementedException();
         }
     }
 }
