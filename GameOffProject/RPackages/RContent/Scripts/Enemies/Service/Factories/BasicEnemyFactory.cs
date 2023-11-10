@@ -18,7 +18,6 @@ namespace Rezoskour.Content
         protected override Enemy OnCreateEnemy()
         {
             Enemy? enemy = Object.Instantiate(enemyPrefab, enemyParent).GetComponent<Enemy>();
-
             return enemy;
         }
     }

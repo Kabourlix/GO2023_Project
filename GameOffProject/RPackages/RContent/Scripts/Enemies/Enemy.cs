@@ -36,7 +36,6 @@ namespace Rezoskour.Content
         {
             manager = KServiceInjection.Get<IEnemyManager>() as EnemyManager ??
                       throw new NullReferenceException("No enemy manager found on enemy start");
-            Initialize(Vector2.zero, Quaternion.identity);
         }
 
         protected virtual void Update()
