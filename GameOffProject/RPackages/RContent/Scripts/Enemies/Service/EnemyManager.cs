@@ -1,5 +1,4 @@
-// Copyright (c) Asobo Studio, All rights reserved. www.asobostudio.com
-
+// Created by Kabourlix Cendrée on 10/11/2023
 
 #nullable enable
 using System;
@@ -26,19 +25,32 @@ namespace Rezoskour.Content
     internal class EnemyManager : IEnemyManager
     {
         private readonly List<Enemy> currentEnemies = new();
+
         /// <inheritdoc />
         public bool IsThereEnemy => currentEnemies.Count == 0;
 
         /// <inheritdoc />
         public event Action<Enemy>? OnEnemySpawn;
+
         /// <inheritdoc />
         public event Action? OnEnemiesCleared;
 
         private Dictionary<EnemyType, EnemyFactory> enemyFactoryPerType = new();
 
-        public EnemyManager()
+        public EnemyManager(Dictionary<EnemyType, GameObject> _prefabPerType)
         {
-            //TODO : Populate the dictionary with each factory
+            foreach (KeyValuePair<EnemyType, GameObject> kvPair in _prefabPerType)
+            {
+                EnemyType type = kvPair.Key;
+                GameObject prefab = kvPair.Value;
+                EnemyFactory? factory = EnemyFactory.Create(type, prefab);
+                if (factory is null)
+                {
+                    continue;
+                }
+
+                enemyFactoryPerType.Add(type, factory);
+            }
         }
 
         /// <inheritdoc />

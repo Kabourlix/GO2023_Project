@@ -1,20 +1,36 @@
-// Copyright (c) Asobo Studio, All rights reserved. www.asobostudio.com
-
+// Created by Kabourlix Cendrée on 10/11/2023
 
 #nullable enable
 using System;
+using UnityEngine;
 using UnityEngine.Pool;
 
 namespace Rezoskour.Content
 {
-    //We could have a factory per difficulty level or only
+    //We could have a factory per difficulty level or only (play with prefab for this)
     internal abstract class EnemyFactory : IDisposable
     {
         protected ObjectPool<Enemy> enemyPool;
+        protected GameObject enemyPrefab;
 
-        public EnemyFactory(int _defaultCapacity = 5, int _maxCapacity = 50)
+        public EnemyFactory(GameObject _enemyPrefab, int _defaultCapacity = 5, int _maxCapacity = 50)
         {
-            enemyPool = new ObjectPool<Enemy>(OnCreateEnemy, OnGetEnemy, OnReleaseEnemy, null, true, _defaultCapacity, _maxCapacity);
+            enemyPrefab = _enemyPrefab;
+            enemyPool = new ObjectPool<Enemy>(OnCreateEnemy, OnGetEnemy, OnReleaseEnemy, null, true, _defaultCapacity,
+                _maxCapacity);
+        }
+
+        public static EnemyFactory? Create(EnemyType _type, GameObject _enemyPrefab, int _defaultCapacity = 5,
+            int _maxCapacity = 50)
+        {
+            switch (_type)
+            {
+                case EnemyType.Basic:
+                    return new BasicEnemyFactory(_enemyPrefab, _defaultCapacity, _maxCapacity);
+                default:
+                    Debug.LogError("No factory for this type of enemy");
+                    return null;
+            }
         }
 
         public Enemy Get() => enemyPool.Get();
@@ -37,6 +53,19 @@ namespace Rezoskour.Content
         public void Dispose()
         {
             enemyPool.Dispose();
+        }
+    }
+
+    internal class BasicEnemyFactory : EnemyFactory
+    {
+        public BasicEnemyFactory(GameObject _enemyPrefab, int _defaultCapacity, int _maxCapacity) : base(_enemyPrefab,
+            _defaultCapacity, _maxCapacity)
+        {
+        }
+
+        protected override Enemy OnCreateEnemy()
+        {
+            throw new NotImplementedException();
         }
     }
 }
