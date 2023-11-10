@@ -2,6 +2,7 @@
 
 #nullable enable
 
+using System;
 using SDKabu.KCore;
 using UnityEngine;
 
@@ -15,6 +16,11 @@ namespace Rezoskour.Content
         {
             IGameManager manager = new GameManager(playerTransform);
             KServiceInjection.Add<IGameManager>(manager);
+        }
+
+        private void OnDestroy()
+        {
+            KServiceInjection.Remove<IGameManager>();
         }
     }
 }
