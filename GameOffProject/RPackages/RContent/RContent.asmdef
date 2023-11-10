@@ -3,7 +3,8 @@
     "rootNamespace": "Rezoskour.Content",
     "references": [
         "KCore",
-        "KCharacter"
+        "KCharacter",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
