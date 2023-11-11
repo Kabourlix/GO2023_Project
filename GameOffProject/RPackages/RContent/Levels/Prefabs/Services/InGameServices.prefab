@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6603000408798337658}
   - component: {fileID: 1892610688662628961}
+  - component: {fileID: 2090843259558772470}
+  - component: {fileID: 2026486956389983613}
   m_Layer: 0
-  m_Name: EnemyManager
+  m_Name: InGameServices
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +46,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ce160c697f64ede902ad6bf00be268c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies: []
+  enemies:
+  - {fileID: 4902046168245179938, guid: e22a270fdaf29a7409fee7e900ae6de0, type: 3}
+  enemyParent: {fileID: 0}
+--- !u!114 &2090843259558772470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503020210335888270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d4024705bc42f6a9564bf86ba3fc35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 0}
+--- !u!114 &2026486956389983613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6503020210335888270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9dffad30f54679a9f1e4eb05fe853d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

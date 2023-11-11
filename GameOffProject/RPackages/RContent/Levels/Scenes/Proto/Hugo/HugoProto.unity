@@ -597,37 +597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86000891931a43259ea314dc90766be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1599128500 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6503020210335888270, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1829159012}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1599128503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599128500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52d4024705bc42f6a9564bf86ba3fc35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTransform: {fileID: 825379068}
---- !u!114 &1599128506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599128500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d9dffad30f54679a9f1e4eb05fe853d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1829159012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -641,26 +610,15 @@ PrefabInstance:
       propertyPath: enemyParent
       value: 
       objectReference: {fileID: 1886308894}
-    - target: {fileID: 1892610688662628961, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
+    - target: {fileID: 2090843259558772470, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
         type: 3}
-      propertyPath: enemies.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1892610688662628961, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
-        type: 3}
-      propertyPath: enemies.Array.data[0]
+      propertyPath: playerTransform
       value: 
-      objectReference: {fileID: 4902046168245179938, guid: e22a270fdaf29a7409fee7e900ae6de0,
-        type: 3}
+      objectReference: {fileID: 825379068}
     - target: {fileID: 6503020210335888270, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
         type: 3}
       propertyPath: m_Name
-      value: EnemyManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 6503020210335888270, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: GameServices
       objectReference: {fileID: 0}
     - target: {fileID: 6603000408798337658, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
         type: 3}
@@ -715,15 +673,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6503020210335888270, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1599128503}
-    - targetCorrespondingSourceObject: {fileID: 6503020210335888270, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1599128506}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d9f75bf8257ae34ca9978c7e1666cd9, type: 3}
 --- !u!1 &1886308893
 GameObject:

@@ -247,7 +247,7 @@ PrefabInstance:
     - target: {fileID: 6503020210335888270, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
         type: 3}
       propertyPath: m_Name
-      value: EnemyManager
+      value: InGameServices
       objectReference: {fileID: 0}
     - target: {fileID: 6603000408798337658, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
         type: 3}
