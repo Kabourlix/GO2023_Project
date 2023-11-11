@@ -1,0 +1,20 @@
+﻿[
+  {
+    "AchievementName": "Play The Game",
+    "AchievementDescription": "Launch the game for the first time",
+    "achievementIconPath": "path/to/icon",
+    "ValueToWatch": ["gameLaunched"],
+    "valueToReach": [1],
+    "reward": null,
+    "IsUnlocked": false
+  },
+  {
+    "AchievementName": "Amazing",
+    "AchievementDescription": "Amazing is description",
+    "achievementIconPath": "path/to22/icon",
+    "ValueToWatch": ["AmazingValue"],
+    "valueToReach": [90],
+    "reward": null,
+    "IsUnlocked": false
+  }
+]
