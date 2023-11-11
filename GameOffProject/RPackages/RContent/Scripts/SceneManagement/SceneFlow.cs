@@ -1,7 +1,6 @@
 // Created by Kabourlix Cendrée on 11/11/2023
 
 using System.Collections;
-using System.Collections.Generic;
 using Rezoskour.Content.SceneManagement;
 using UnityEngine;
 
