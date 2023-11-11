@@ -1,20 +1,28 @@
-// Created by Hugo DA MAÏA on 05/11/2023
+// Created by Kabourlix Cendrée on 06/11/2023
 
+#nullable enable
+
+using System;
+using JetBrains.Annotations;
 using SDKabu.KCore;
 
 namespace Rezoskour.Content
 {
     public interface IAchievementService : IKService
     {
-        public void Init(string _pathToRegisteredData);
+        public event Action<string>? OnAchievementUnlocked;
 
         public Achievement[] GetAchievements();
         public bool TryGetAchievement(string _id, out Achievement _achievement);
 
         public bool IsAchievementUnlocked(string _id);
 
-        public bool TryRegisterValue(string _id, int _defaultValue);
+        public bool TryRegisterAchievement(Achievement _achievement);
+
+        public bool TryRegisterValue(string _id, int _defaultValue, bool _ignoreMessage = false);
         public bool TryUnregisterValue(string _id);
+
+        public bool TryGetValue(string _id, out int _value);
 
         public bool TryUpdateValue(string _id, int _newValue);
 
