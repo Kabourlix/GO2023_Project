@@ -9,5 +9,6 @@ namespace Rezoskour.Content.Shop
         public string ObjectName { get; }
         public string ObjectDescription { get; }
         public string ObjectIconPath { get; }
+        public int Price { get; }
     }
 }
