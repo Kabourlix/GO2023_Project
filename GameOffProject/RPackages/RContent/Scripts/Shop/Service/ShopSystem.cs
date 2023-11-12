@@ -3,26 +3,62 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-// Created by Kabourlix Cendrée on 12/11/2023
 
 namespace Rezoskour.Content.Shop
 {
     public class ShopSystem : IShop
     {
+        private List<IShopItem> accessibleObjects = new();
+        private IShopItem nullShopItem;
+        private Random rd = new();
+
+        public ShopSystem(IShopItem _nullShopItem)
+        {
+            nullShopItem = _nullShopItem;
+            ScrapAllObjects();
+        }
         public void Dispose()
         {
             // TODO release managed resources here
         }
 
-        public bool TryBuy(IObject _object)
+        public bool TryBuy(ICurrencyUser _customer, IShopItem _shopItem)
         {
-            return false;
+            if (!_shopItem.IsAvailable)
+            {
+                return false;
+            }
+            return _customer.TrySpendCurrency(_shopItem.Price);
         }
 
-        public IObject[] SampleForShop(int _amount)
+        public IShopItem[] SampleForShop(int _amount)
         {
-            return Array.Empty<IObject>();
+            //Sample _amount of random objects from accessibleObjects, provide nullObject if not enough objects
+            if (accessibleObjects.Count > _amount)
+            {
+                return accessibleObjects.OrderBy(_item => rd.Next()).Take(_amount).ToArray();
+            }
+            if (accessibleObjects.Count == _amount)
+            {
+                return accessibleObjects.ToArray();
+            }
+
+            IShopItem[] objects = new IShopItem[_amount];
+            for (int i = 0; i < accessibleObjects.Count; i++)
+            {
+
+                objects[i] = i >= accessibleObjects.Count ? nullShopItem : accessibleObjects[i];
+            }
+
+            return objects;
+        }
+
+        private void ScrapAllObjects()
+        {
+            //TODO Collect all objects from the game
         }
     }
 }

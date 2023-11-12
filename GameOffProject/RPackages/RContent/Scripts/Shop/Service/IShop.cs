@@ -7,7 +7,7 @@ namespace Rezoskour.Content.Shop
 {
     public interface IShop : IKService
     {
-        public bool TryBuy(IObject _object);
-        public IObject[] SampleForShop(int _amount);
+        public bool TryBuy(ICurrencyUser _customer, IShopItem _shopItem);
+        public IShopItem[] SampleForShop(int _amount);
     }
 }

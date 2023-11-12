@@ -11,7 +11,7 @@ namespace Rezoskour.Content.Shop
     {
         private void Awake()
         {
-            ShopSystem service = new();
+            ShopSystem service = new(null); //TODO Change with null object
             KServiceInjection.Add<IShop>(service);
         }
 

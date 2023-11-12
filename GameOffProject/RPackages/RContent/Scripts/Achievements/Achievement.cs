@@ -19,7 +19,7 @@ namespace Rezoskour.Content
 
         public int[] valueToReach;
 
-        public IObject reward;
+        public IShopItem reward;
         public bool IsUnlocked { get; set; }
 
         public static string ToJson(Achievement _a)
