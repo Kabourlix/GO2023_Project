@@ -7,10 +7,19 @@
             "actions": [
                 {
                     "name": "Dash",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "ab7fc29d-2263-4558-8986-c6c8214da935",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
                     "processors": "StickDeadzone(min=1.401298E-45,max=1)",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "DashPos",
+                    "type": "Value",
+                    "id": "16ec8c19-c3c2-4d4f-97ed-4651dc1a5d7b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 }
@@ -24,6 +33,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f4ed8ef-c218-4242-b0aa-3ca8a18701e4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8bb8c670-854b-43cf-a1e9-b3017054035f",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DashPos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a40cf2c8-2a10-46fe-b1b5-776ebd4404ac",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DashPos",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
