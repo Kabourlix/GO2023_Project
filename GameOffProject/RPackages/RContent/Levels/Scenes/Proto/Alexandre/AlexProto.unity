@@ -505,7 +505,6 @@ GameObject:
   - component: {fileID: 459012372}
   - component: {fileID: 459012375}
   - component: {fileID: 459012376}
-  - component: {fileID: 459012377}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -769,43 +768,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e339c3e2028b34ea46c1d5baba9876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDashing: 0
-  canDash: 1
---- !u!114 &459012377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 459012369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: c68c7a195d9e81d478c78efb99ee8d72,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ab7fc29d-2263-4558-8986-c6c8214da935
-    m_ActionName: Player/Dash[/XInputControllerWindows/leftStick]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  inputReader: {fileID: 11400000, guid: bbc9207efde8c0042811e345969b7ada, type: 2}
+  cam: {fileID: 578848173}
+  ignoredMask:
+    serializedVersion: 2
+    m_Bits: 246
 --- !u!1 &465816419
 GameObject:
   m_ObjectHideFlags: 0

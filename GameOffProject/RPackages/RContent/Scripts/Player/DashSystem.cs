@@ -1,4 +1,5 @@
-// Created by Kabourlix Cendrée on 14/11/2023
+// Copyright (c) Asobo Studio, All rights reserved. www.asobostudio.com
+
 
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Rezoskour.Content
 
         [SerializeField] private InputReader inputReader;
         [SerializeField] private Camera cam;
+        [SerializeField] private LayerMask ignoredMask;
         private List<DashStrategy> dashList = new();
         private int index = 0;
 
@@ -35,7 +37,7 @@ namespace Rezoskour.Content
         {
             inputReader.DashEvent += OnDash;
             inputReader.DashMoveEvent += OnDashUpdate;
-            dashList.Add(new BasicDash());
+            dashList.Add(new BasicDash(ignoredMask));
         }
 
         private void Update()
@@ -57,15 +59,27 @@ namespace Rezoskour.Content
 
         private void OnDashUpdate(Vector2 _mousePos)
         {
+            if (!IsControl)
+            {
+                return;
+            }
+            Debug.Log("OnDashUpdate");
             DashStrategy currentDash = dashList[index];
             Vector2 cursorPos = cam.ScreenToWorldPoint(_mousePos);
             if ((cursorPos - lastCursorPos).sqrMagnitude < TOLERANCE)
             {
                 return;
             }
-
+            lastCursorPos = cursorPos;
             Vector2 direction = (cursorPos - (Vector2)transform.position).normalized;
-            Vector3[] trajPoints = currentDash.GetTrajectories(direction, currentDash.DashDistance);
+            Debug.Log($"CurrentDash distance {currentDash.DashDistance}");
+            Vector3[] trajPoints = currentDash.GetTrajectories(transform.position, direction, currentDash.DashDistance);
+            Debug.Log("TRAJPOINTS");
+            foreach (Vector3 point in trajPoints)
+            {
+                Debug.Log(point);
+            }
+            Debug.Log("----");
             lineRenderer.SetPositions(trajPoints);
         }
 
@@ -74,11 +88,14 @@ namespace Rezoskour.Content
             Debug.Log("On Dash"); //Appelé mais ne marche pas.
             if (!_isReleased)
             {
+                IsControl = true;
                 return;
             }
 
             //Perform movement
+            lineRenderer.positionCount = 0;
             IsDashing = true;
+            IsControl = false;
             dashList[index].FillQueue();
         }
 
