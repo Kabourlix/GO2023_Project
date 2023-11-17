@@ -1,4 +1,5 @@
-// Created by Kabourlix Cendrée on 14/11/2023
+// Copyright (c) Asobo Studio, All rights reserved. www.asobostudio.com
+
 
 #nullable enable
 
@@ -10,22 +11,27 @@ namespace Rezoskour.Content
 {
     public class BasicDash : DashStrategy
     {
-        public override IEnumerator Execute(Vector2 _direction, Rigidbody2D _rb, DashSystem _dashSystem)
-        {
-            _dashSystem.CanDash = false;
-            _dashSystem.IsDashing = true;
-            _rb.AddForce(new Vector2(_direction.x * DashSpeed, _direction.y * DashSpeed),
-                ForceMode2D.Impulse);
-            yield return new WaitForSeconds(DashDuration);
-            _dashSystem.IsDashing = false;
+        /// <inheritdoc />
+        public override float DashSpeed => 15f;
+        /// <inheritdoc />
+        public override float DashDuration => 1f;
+        /// <inheritdoc />
+        public override float DashCooldown => 0.1f;
 
-            yield return new WaitForSeconds(DashCooldown);
-            _dashSystem.CanDash = true;
+        /// <inheritdoc />
+        public BasicDash(LayerMask _layerMask) : base(_layerMask)
+        {
         }
 
-        public override Vector3[] GetTrajectories(Vector2 _direction, float _maxDistance)
+        public override Vector3[] GetTrajectories(Vector2 _origin, Vector2 _direction, float _maxDistance)
         {
-            return Array.Empty<Vector3>();
+            RaycastHit2D hit = Physics2D.Raycast(_origin, _direction, _maxDistance, ~layerMask);
+            Vector3 origin3D = _origin;
+            //TODO : Corriger le calcul des trajectoires
+            Trajectory.Clear();
+            Trajectory.Add(origin3D, _direction);
+            Trajectory.Add(hit.collider ? hit.point : origin3D + _maxDistance * (Vector3)_direction, Vector2.zero);
+            return hit.collider ? new[] { Vector3.zero, (Vector3)hit.point } : new[] { Vector3.zero, _maxDistance * (Vector3)_direction };
         }
     }
 }

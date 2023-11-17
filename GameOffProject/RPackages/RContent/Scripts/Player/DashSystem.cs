@@ -1,4 +1,5 @@
-// Created by Kabourlix Cendrée on 14/11/2023
+// Copyright (c) Asobo Studio, All rights reserved. www.asobostudio.com
+
 
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Rezoskour.Content
 
         [SerializeField] private InputReader inputReader;
         [SerializeField] private Camera cam;
+        [SerializeField] private LayerMask ignoredMask;
         private List<DashStrategy> dashList = new();
         private int index = 0;
 
@@ -35,7 +37,7 @@ namespace Rezoskour.Content
         {
             inputReader.DashEvent += OnDash;
             inputReader.DashMoveEvent += OnDashUpdate;
-            dashList.Add(new BasicDash());
+            dashList.Add(new BasicDash(ignoredMask));
         }
 
         private void Update()
@@ -50,6 +52,7 @@ namespace Rezoskour.Content
                 return;
             }
 
+            Debug.Log("FINISHED");
             IsDashing = false;
             CanDash = true;
             index = (index + 1) % dashList.Count;
@@ -57,28 +60,40 @@ namespace Rezoskour.Content
 
         private void OnDashUpdate(Vector2 _mousePos)
         {
-            DashStrategy currentDash = dashList[index];
-            Vector2 cursorPos = cam.ScreenToWorldPoint(_mousePos);
-            if ((cursorPos - lastCursorPos).sqrMagnitude < TOLERANCE)
+            if (!IsControl || IsDashing)
             {
                 return;
             }
-
+            Debug.Log("OnDashUpdate");
+            DashStrategy currentDash = dashList[index];
+            Vector2 cursorPos = cam.ScreenToWorldPoint(_mousePos);
+            // if ((cursorPos - lastCursorPos).sqrMagnitude < TOLERANCE)
+            // {
+            //     return;
+            // }
+            lastCursorPos = cursorPos;
             Vector2 direction = (cursorPos - (Vector2)transform.position).normalized;
-            Vector3[] trajPoints = currentDash.GetTrajectories(direction, currentDash.DashDistance);
+            Vector3[] trajPoints = currentDash.GetTrajectories(transform.position, direction, currentDash.DashDistance);
             lineRenderer.SetPositions(trajPoints);
         }
 
         private void OnDash(bool _isReleased)
         {
-            Debug.Log("On Dash"); //Appelé mais ne marche pas.
+            if (IsDashing)
+            {
+                return;
+            }
             if (!_isReleased)
             {
+                OnDashUpdate(inputReader.DashPos);
+                IsControl = true;
                 return;
             }
 
             //Perform movement
+            lineRenderer.SetPositions(Array.Empty<Vector3>());
             IsDashing = true;
+            IsControl = false;
             dashList[index].FillQueue();
         }
 

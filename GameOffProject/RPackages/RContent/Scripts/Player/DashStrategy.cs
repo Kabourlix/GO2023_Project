@@ -1,4 +1,5 @@
-// Created by Kabourlix Cendrée on 14/11/2023
+// Copyright (c) Asobo Studio, All rights reserved. www.asobostudio.com
+
 
 #nullable enable
 
@@ -10,10 +11,10 @@ namespace Rezoskour.Content
 {
     public abstract class DashStrategy
     {
-        public const float TOLERANCE = 0.01f;
-        public float DashSpeed { get; } = 15f;
-        public float DashDuration { get; } = 0.2f;
-        public float DashCooldown { get; } = 0.15f;
+        public const float TOLERANCE = 0.1f;
+        public abstract float DashSpeed { get; }
+        public abstract float DashDuration { get; }
+        public abstract float DashCooldown { get; }
 
         public float DashDistance => DashSpeed * DashDuration;
 
@@ -22,9 +23,14 @@ namespace Rezoskour.Content
 
         protected Vector2? currentTarget = null;
 
-        public abstract IEnumerator Execute(Vector2 _direction, Rigidbody2D _rb, DashSystem _dashSystem);
+        protected LayerMask layerMask;
 
-        public abstract Vector3[] GetTrajectories(Vector2 _direction, float _maxDistance);
+        public DashStrategy(LayerMask _layerMask)
+        {
+            layerMask = _layerMask;
+        }
+
+        public abstract Vector3[] GetTrajectories(Vector2 _origin, Vector2 _direction, float _maxDistance);
 
         public void FillQueue()
         {
@@ -51,6 +57,7 @@ namespace Rezoskour.Content
                 currentTarget = TrajectoryQueue.Dequeue();
             }
 
+            Debug.Log($"Moving to {currentTarget}");
             Vector2 direction = (currentTarget.Value - (Vector2)_player.position).normalized;
             _player.position += DashSpeed * Time.deltaTime * (Vector3)direction;
 
