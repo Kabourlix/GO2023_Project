@@ -60,7 +60,7 @@ namespace Rezoskour.Content
 
         private void OnDashUpdate(Vector2 _mousePos)
         {
-            if (!IsControl)
+            if (!IsControl || IsDashing)
             {
                 return;
             }
@@ -79,9 +79,13 @@ namespace Rezoskour.Content
 
         private void OnDash(bool _isReleased)
         {
-            Debug.Log("On Dash"); //Appelé mais ne marche pas.
+            if (IsDashing)
+            {
+                return;
+            }
             if (!_isReleased)
             {
+                OnDashUpdate(inputReader.DashPos);
                 IsControl = true;
                 return;
             }

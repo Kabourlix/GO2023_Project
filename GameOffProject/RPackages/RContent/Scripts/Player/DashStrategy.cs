@@ -11,7 +11,7 @@ namespace Rezoskour.Content
 {
     public abstract class DashStrategy
     {
-        public const float TOLERANCE = 0.01f;
+        public const float TOLERANCE = 0.1f;
         public abstract float DashSpeed { get; }
         public abstract float DashDuration { get; }
         public abstract float DashCooldown { get; }
@@ -57,7 +57,7 @@ namespace Rezoskour.Content
                 currentTarget = TrajectoryQueue.Dequeue();
             }
 
-            Debug.Log("Moving");
+            Debug.Log($"Moving to {currentTarget}");
             Vector2 direction = (currentTarget.Value - (Vector2)_player.position).normalized;
             _player.position += DashSpeed * Time.deltaTime * (Vector3)direction;
 

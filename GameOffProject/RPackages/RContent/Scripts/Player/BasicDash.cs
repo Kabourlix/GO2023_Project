@@ -14,7 +14,7 @@ namespace Rezoskour.Content
         /// <inheritdoc />
         public override float DashSpeed => 15f;
         /// <inheritdoc />
-        public override float DashDuration => 0.2f;
+        public override float DashDuration => 1f;
         /// <inheritdoc />
         public override float DashCooldown => 0.1f;
 
@@ -27,10 +27,11 @@ namespace Rezoskour.Content
         {
             RaycastHit2D hit = Physics2D.Raycast(_origin, _direction, _maxDistance, ~layerMask);
             Vector3 origin3D = _origin;
+            //TODO : Corriger le calcul des trajectoires
             Trajectory.Clear();
             Trajectory.Add(origin3D, _direction);
-            Trajectory.Add(origin3D + _maxDistance * (Vector3)_direction, Vector2.zero);
-            return hit.collider ? new[] { origin3D, (Vector3)hit.point } : new[] { origin3D, origin3D + _maxDistance * (Vector3)_direction };
+            Trajectory.Add(hit.collider ? hit.point : origin3D + _maxDistance * (Vector3)_direction, Vector2.zero);
+            return hit.collider ? new[] { Vector3.zero, (Vector3)hit.point } : new[] { Vector3.zero, _maxDistance * (Vector3)_direction };
         }
     }
 }
