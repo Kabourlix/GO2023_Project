@@ -1,9 +1,12 @@
-// Copyright (c) Asobo Studio, All rights reserved. www.asobostudio.com
+// Created by Kabourlix Cendrée on 14/11/2023
 
+#nullable enable
 
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Rezoskour.Content.Inputs;
+using SDKabu.KCore;
 using UnityEngine;
 
 namespace Rezoskour.Content
@@ -11,22 +14,23 @@ namespace Rezoskour.Content
     public class DashSystem : MonoBehaviour
     {
         public const float TOLERANCE = 0.01f;
+        private const string COOLDOWN_ID = "DashSystem";
 
-        [SerializeField] private InputReader inputReader;
-        [SerializeField] private Camera cam;
+        [SerializeField] private InputReader inputReader = null!;
+        [SerializeField] private Camera cam = null!;
         [SerializeField] private LayerMask ignoredMask;
-        private List<DashStrategy> dashList = new();
-        private int index = 0;
 
-        private LineRenderer lineRenderer;
+        private readonly List<DashStrategy> dashList = new();
+        private int currentDashIndex = 0;
+
+        private LineRenderer lineRenderer = null!;
+        private IKCoolDown? cdSystem;
 
         private Vector2 lastCursorPos;
 
         public bool IsDashing { get; set; } = false;
         public bool CanDash { get; set; } = true;
-        private bool IsControl { get; set; } = false;
-        private Vector2 input;
-        private float distance;
+        private bool IsWaitingForRelease { get; set; } = false;
 
         private void Awake()
         {
@@ -35,9 +39,11 @@ namespace Rezoskour.Content
 
         private void Start()
         {
+            cdSystem = KServiceInjection.Get<IKCoolDown>();
             inputReader.DashEvent += OnDash;
             inputReader.DashMoveEvent += OnDashUpdate;
             dashList.Add(new BasicDash(ignoredMask));
+            cdSystem?.TryRegisterCoolDown(COOLDOWN_ID, dashList[currentDashIndex].DashCooldown);
         }
 
         private void Update()
@@ -47,33 +53,31 @@ namespace Rezoskour.Content
                 return;
             }
 
-            if (!dashList[index].PerformMovement(transform))
+            if (!dashList[currentDashIndex].PerformMovement(transform))
             {
                 return;
             }
 
-            Debug.Log("FINISHED");
+            //TODO : start cd here
             IsDashing = false;
             CanDash = true;
-            index = (index + 1) % dashList.Count;
+            currentDashIndex = (currentDashIndex + 1) % dashList.Count;
         }
 
         private void OnDashUpdate(Vector2 _mousePos)
         {
-            if (!IsControl || IsDashing)
+            if (!IsWaitingForRelease || IsDashing) //Use cooldown correctly
             {
+                cdSystem?.UpdateCoolDownDuration(COOLDOWN_ID, dashList[currentDashIndex].DashCooldown, true);
                 return;
             }
-            Debug.Log("OnDashUpdate");
-            DashStrategy currentDash = dashList[index];
+
+            DashStrategy currentDash = dashList[currentDashIndex];
             Vector2 cursorPos = cam.ScreenToWorldPoint(_mousePos);
-            // if ((cursorPos - lastCursorPos).sqrMagnitude < TOLERANCE)
-            // {
-            //     return;
-            // }
-            lastCursorPos = cursorPos;
+
             Vector2 direction = (cursorPos - (Vector2)transform.position).normalized;
             Vector3[] trajPoints = currentDash.GetTrajectories(transform.position, direction, currentDash.DashDistance);
+            lineRenderer.positionCount = trajPoints.Length;
             lineRenderer.SetPositions(trajPoints);
         }
 
@@ -83,47 +87,23 @@ namespace Rezoskour.Content
             {
                 return;
             }
+
             if (!_isReleased)
             {
+                IsWaitingForRelease = true;
+                lineRenderer.enabled = true;
                 OnDashUpdate(inputReader.DashPos);
-                IsControl = true;
                 return;
             }
 
             //Perform movement
-            lineRenderer.SetPositions(Array.Empty<Vector3>());
-            IsDashing = true;
-            IsControl = false;
-            dashList[index].FillQueue();
-        }
+            lineRenderer.enabled = false;
+            lineRenderer.positionCount = 0;
 
-        // private void FixedUpdate()
-        // {
-        //     playerInput.actions["Dash"].started += context =>
-        //     {
-        //         if (canDash)
-        //         {
-        //             isControl = true;
-        //         }
-        //     };
-        //
-        //     if (isControl)
-        //     {
-        //         input = playerInput.actions["Dash"].ReadValue<Vector2>();
-        //         distance = dashList[index].DashSpeed * dashList[index].DashDuration;
-        //         lineRenderer.SetPosition(1, new Vector3(input.x * distance, input.y * distance, 0));
-        //     }
-        //
-        //     playerInput.actions["Dash"].performed += context =>
-        //     {
-        //         if (canDash && isControl)
-        //         {
-        //             isControl = false;
-        //             lineRenderer.SetPosition(1, new Vector3(0, 0, 0));
-        //             StartCoroutine(dashList[index]
-        //                 .Execute(new Vector2(input.x * distance, input.y * distance), rb, this));
-        //         }
-        //     };
-        // }
+            IsDashing = true;
+            IsWaitingForRelease = false;
+
+            dashList[currentDashIndex].FillQueue();
+        }
     }
 }
