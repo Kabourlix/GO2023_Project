@@ -27,6 +27,9 @@ namespace Rezoskour.Content
         {
             RaycastHit2D hit = Physics2D.Raycast(_origin, _direction, _maxDistance, ~layerMask);
             Vector3 origin3D = _origin;
+            Trajectory.Clear();
+            Trajectory.Add(origin3D, _direction);
+            Trajectory.Add(origin3D + _maxDistance * (Vector3)_direction, Vector2.zero);
             return hit.collider ? new[] { origin3D, (Vector3)hit.point } : new[] { origin3D, origin3D + _maxDistance * (Vector3)_direction };
         }
     }

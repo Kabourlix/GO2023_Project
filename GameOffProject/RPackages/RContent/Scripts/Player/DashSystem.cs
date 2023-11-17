@@ -52,6 +52,7 @@ namespace Rezoskour.Content
                 return;
             }
 
+            Debug.Log("FINISHED");
             IsDashing = false;
             CanDash = true;
             index = (index + 1) % dashList.Count;
@@ -66,20 +67,13 @@ namespace Rezoskour.Content
             Debug.Log("OnDashUpdate");
             DashStrategy currentDash = dashList[index];
             Vector2 cursorPos = cam.ScreenToWorldPoint(_mousePos);
-            if ((cursorPos - lastCursorPos).sqrMagnitude < TOLERANCE)
-            {
-                return;
-            }
+            // if ((cursorPos - lastCursorPos).sqrMagnitude < TOLERANCE)
+            // {
+            //     return;
+            // }
             lastCursorPos = cursorPos;
             Vector2 direction = (cursorPos - (Vector2)transform.position).normalized;
-            Debug.Log($"CurrentDash distance {currentDash.DashDistance}");
             Vector3[] trajPoints = currentDash.GetTrajectories(transform.position, direction, currentDash.DashDistance);
-            Debug.Log("TRAJPOINTS");
-            foreach (Vector3 point in trajPoints)
-            {
-                Debug.Log(point);
-            }
-            Debug.Log("----");
             lineRenderer.SetPositions(trajPoints);
         }
 
@@ -93,7 +87,7 @@ namespace Rezoskour.Content
             }
 
             //Perform movement
-            lineRenderer.positionCount = 0;
+            lineRenderer.SetPositions(Array.Empty<Vector3>());
             IsDashing = true;
             IsControl = false;
             dashList[index].FillQueue();

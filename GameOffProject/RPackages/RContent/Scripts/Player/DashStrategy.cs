@@ -57,6 +57,7 @@ namespace Rezoskour.Content
                 currentTarget = TrajectoryQueue.Dequeue();
             }
 
+            Debug.Log("Moving");
             Vector2 direction = (currentTarget.Value - (Vector2)_player.position).normalized;
             _player.position += DashSpeed * Time.deltaTime * (Vector3)direction;
 
