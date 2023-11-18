@@ -1,4 +1,5 @@
-// Created by Kabourlix Cendrée on 14/11/2023
+// Copyrighted by team Rézoskour
+// Created by alexandre buzon on 15
 
 #nullable enable
 
@@ -8,6 +9,7 @@ using JetBrains.Annotations;
 using Rezoskour.Content.Inputs;
 using SDKabu.KCore;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Rezoskour.Content
 {
@@ -21,7 +23,16 @@ namespace Rezoskour.Content
         [SerializeField] private LayerMask ignoredMask;
 
         private readonly List<DashStrategy> dashList = new();
+
+        //Getter
+        public List<DashStrategy> DashList => dashList;
+
         private int currentDashIndex = 0;
+
+        //Getter
+        public int CurrentDashIndex => currentDashIndex;
+
+        public event Action? OnDashEvent;
 
         private LineRenderer lineRenderer = null!;
         private IKCoolDown? cdSystem;
@@ -43,6 +54,8 @@ namespace Rezoskour.Content
             inputReader.DashEvent += OnDash;
             inputReader.DashMoveEvent += OnDashUpdate;
             dashList.Add(new BasicDash(ignoredMask));
+            dashList.Add(new BasicDash(ignoredMask));
+            dashList.Add(new BasicDash(ignoredMask));
             cdSystem?.TryRegisterCoolDown(COOLDOWN_ID, dashList[currentDashIndex].DashCooldown);
         }
 
@@ -62,6 +75,7 @@ namespace Rezoskour.Content
             IsDashing = false;
             CanDash = true;
             currentDashIndex = (currentDashIndex + 1) % dashList.Count;
+            OnDashEvent?.Invoke();
         }
 
         private void OnDashUpdate(Vector2 _mousePos)
