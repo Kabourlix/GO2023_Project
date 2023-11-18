@@ -1,5 +1,4 @@
-// Copyrighted by team Rézoskour
-// Created by alexandre buzon on 15
+// Created by Kabourlix Cendrée on 14/11/2023
 
 #nullable enable
 
@@ -71,7 +70,7 @@ namespace Rezoskour.Content
                 return;
             }
 
-            //TODO : start cd here
+            cdSystem?.StartCoolDown(COOLDOWN_ID, true);
             IsDashing = false;
             CanDash = true;
             currentDashIndex = (currentDashIndex + 1) % dashList.Count;
@@ -97,7 +96,7 @@ namespace Rezoskour.Content
 
         private void OnDash(bool _isReleased)
         {
-            if (IsDashing)
+            if (IsDashing || (!cdSystem?.IsCoolDownFinished(COOLDOWN_ID) ?? false))
             {
                 return;
             }
