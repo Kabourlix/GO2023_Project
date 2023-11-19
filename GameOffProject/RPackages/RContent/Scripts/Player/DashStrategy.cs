@@ -1,10 +1,10 @@
-// Copyright (c) Asobo Studio, All rights reserved. www.asobostudio.com
-
+// Created by Kabourlix Cendrée on 14/11/2023
 
 #nullable enable
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Rezoskour.Content
@@ -68,6 +68,19 @@ namespace Rezoskour.Content
             }
 
             return false;
+        }
+
+        protected void ResetTrajectory(Vector2 _origin, Vector2 _direction)
+        {
+            Trajectory.Clear();
+            Trajectory.Add(_origin, _direction);
+        }
+
+        protected Vector3[] ConvertTrajectoryToLineRendererPoints(Vector2 _origin)
+        {
+            Vector3[] traj = Trajectory.Keys.Select(_dummy => (Vector3)(_dummy - _origin)).ToArray();
+            traj[0] = Vector3.zero;
+            return traj;
         }
     }
 }

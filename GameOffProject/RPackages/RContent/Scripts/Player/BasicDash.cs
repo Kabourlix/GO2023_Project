@@ -28,8 +28,7 @@ namespace Rezoskour.Content
 
         public override Vector3[] GetTrajectories(Vector2 _origin, Vector2 _direction, float _maxDistance)
         {
-            Trajectory.Clear();
-            Trajectory.Add(_origin, _direction);
+            ResetTrajectory(_origin, _direction);
 
             RaycastHit2D hit = Physics2D.Raycast(_origin, _direction, _maxDistance, ~layerMask);
 
@@ -42,10 +41,7 @@ namespace Rezoskour.Content
                 Trajectory.Add(_origin + _maxDistance * _direction, Vector2.zero);
             }
 
-            Vector3[] traj = Trajectory.Keys.Select(_dummy => (Vector3)(_dummy - _origin)).ToArray();
-            traj[0] = Vector3.zero;
-
-            return traj;
+            return ConvertTrajectoryToLineRendererPoints(_origin);
         }
     }
 }

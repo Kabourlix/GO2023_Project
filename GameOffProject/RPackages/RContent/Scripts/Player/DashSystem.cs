@@ -52,9 +52,9 @@ namespace Rezoskour.Content
             cdSystem = KServiceInjection.Get<IKCoolDown>();
             inputReader.DashEvent += OnDash;
             inputReader.DashMoveEvent += OnDashUpdate;
-            dashList.Add(new BasicDash(ignoredMask));
-            dashList.Add(new BasicDash(ignoredMask));
-            dashList.Add(new BasicDash(ignoredMask));
+            dashList.Add(new BouncingDash(ignoredMask));
+            dashList.Add(new BouncingDash(ignoredMask));
+            dashList.Add(new BouncingDash(ignoredMask));
             cdSystem?.TryRegisterCoolDown(COOLDOWN_ID, dashList[currentDashIndex].DashCooldown);
         }
 
