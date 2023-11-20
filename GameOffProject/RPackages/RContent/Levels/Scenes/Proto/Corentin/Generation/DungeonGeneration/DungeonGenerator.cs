@@ -20,7 +20,7 @@ public class DungeonGenerator : MonoBehaviour
         
         foreach (var roomPosition in rooms)
         {
-          RoomController.instance.LoadRoom("Empty", roomPosition.x, roomPosition.y);
+          RoomController.instance.LoadRoom(RoomController.instance.GetRandomRoomName(), roomPosition.x, roomPosition.y);
         }
     }
 }

@@ -24,6 +24,12 @@ EditorBuildSettings:
     path: Packages/com.rezoskour.gameoff.content/Levels/Scenes/Proto/Corentin/Generation/DungeonRooms/BasementMain.unity
     guid: c874fc1a1b4b63b4e8d7fc311d4d9d4f
   - enabled: 1
+    path: Packages/com.rezoskour.gameoff.content/Levels/Scenes/Proto/Corentin/Generation/DungeonRooms/BasementBasic1.unity
+    guid: b9412a050c5603d4f89e2bc53c49ec3e
+  - enabled: 1
     path: Packages/com.rezoskour.gameoff.content/Levels/Scenes/Proto/Corentin/Generation/DungeonRooms/BasementStart.unity
     guid: 6ce9bcf89ac168943ad7f69dcb44a88d
+  - enabled: 1
+    path: Packages/com.rezoskour.gameoff.content/Levels/Scenes/Proto/Corentin/Generation/DungeonRooms/BasementBasic2.unity
+    guid: b8f4658b977b45245837ee81fa356049
   m_configObjects: {}

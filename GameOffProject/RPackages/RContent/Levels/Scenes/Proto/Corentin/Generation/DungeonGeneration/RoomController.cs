@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 public class RoomInfo
 {
@@ -15,8 +16,9 @@ public class RoomInfo
 
 public class RoomController : MonoBehaviour
 {
-
+    public Camera miniMapCamera;
     public static RoomController instance;
+    public GameObject roomMiniMap;
 
     private String currentWorldName = "Basement";
 
@@ -106,10 +108,13 @@ public class RoomController : MonoBehaviour
     {
         if(!DoesRoomExist(currentLoadRoomData.xRi, currentLoadRoomData.yRi))
         {
+            var roomMM = Instantiate(roomMiniMap, new Vector3(currentLoadRoomData.xRi * 3.5f, currentLoadRoomData.yRi * 2.3f), Quaternion.identity);
             room.transform.position = new Vector3(currentLoadRoomData.xRi * room.width, currentLoadRoomData.yRi * room.height);
             room.xRoom = currentLoadRoomData.xRi;
             room.yRoom = currentLoadRoomData.yRi;
             room.name = currentWorldName + "-" + currentLoadRoomData.name + " " + room.xRoom + ", " + room.yRoom;
+            roomMM.name = "Minimap" + "-" + currentLoadRoomData.name + " " + room.xRoom + ", " + room.yRoom;
+            roomMM.transform.parent = transform;
             room.transform.parent = transform;
             isLoadingRoom = false;
             if (loadedRooms.Count == 0)
@@ -134,11 +139,43 @@ public class RoomController : MonoBehaviour
     {
         return loadedRooms.Find(item => item.xRoom == x && item.xRoom == y);
     }
+    
+    public string GetRandomRoomName()
+    {
+        string[] possibleRooms = new string[]
+        {
+            "Empty",
+            "Basic1"
+        };
+        return possibleRooms[Random.Range(0, possibleRooms.Length)];
+    }
     public void OnPlayerEnterRoom(Room room)
     {
         CameraController.instance.currentRoom = room;
         currentRoom = room;
+        UpdateMiniMapPosition();
+        UpdateRooms();
     }
 
-    
+    private void UpdateMiniMapPosition()
+    {
+        miniMapCamera.transform.position = new Vector3(currentRoom.xRoom * 3.5f, currentRoom.yRoom * 2.3f, -10);
+    }
+
+    private void UpdateRooms()
+    {
+        foreach (Room room in loadedRooms)
+        {
+            if (currentRoom != null)
+            {
+                //Get all enemies in the room
+                //foreach enemy enemy.notInRoom = true
+            }
+            else
+            {
+                //Get all enemies in the room
+                //foreach enemy enemy.notInRoom = false
+            }
+        }
+    }
 }

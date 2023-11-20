@@ -21,7 +21,8 @@ public class Room : MonoBehaviour
         this.xRoom = xRoom;
         this.yRoom = yRoom;
     }
-
+    
+    
     public Door leftDoor;
     
     public Door rightDoor;
@@ -83,25 +84,25 @@ public class Room : MonoBehaviour
             switch (door.doorType)
             {
                 case Door.DoorType.left:
-                    if (GetRight() == null)
+                    if (!GetLeft())
                     {
                         door.gameObject.SetActive(false);
                     }
                     break;
                 case Door.DoorType.right:
-                    if (GetLeft() == null)
+                    if (!GetRight())
                     {
                         door.gameObject.SetActive(false);
                     }
                     break;
                 case Door.DoorType.top:
-                    if (GetTop() == null)
+                    if (!GetTop())
                     {
                         door.gameObject.SetActive(false);
                     }
                     break;
                 case Door.DoorType.bottom:
-                    if (GetBottom() == null)
+                    if (!GetBottom())
                     {
                         door.gameObject.SetActive(false);
                     }
@@ -113,40 +114,41 @@ public class Room : MonoBehaviour
         }
     }
 
-    public Room GetRight()
+    public bool GetRight()
     {
-        if(RoomController.instance.DoesRoomExist(xRoom + 1, yRoom))
+        int tempx = xRoom + 1;
+        if(RoomController.instance.DoesRoomExist(tempx, yRoom))
         {
-            return RoomController.instance.FindRoom(xRoom + 1, yRoom);
+            Debug.Log("Room exists to the right."+ xRoom + " " + yRoom);
+            return true;
         }
-        return null;
+        return false;
     }
-    public Room GetLeft()
+    public bool GetLeft()
     {
-        if(RoomController.instance.DoesRoomExist(xRoom - 1, yRoom))
+        int tempx = xRoom - 1;
+        if(RoomController.instance.DoesRoomExist(tempx, yRoom))
         {
-            return RoomController.instance.FindRoom(xRoom - 1, yRoom);
+            Debug.Log("Room exists to the left."+ xRoom + " " + yRoom);
+            return true;
         }
-
-        return null;
+        return false;
     }
-    public Room GetTop()
+    public bool GetTop()
     {
         if(RoomController.instance.DoesRoomExist(xRoom, yRoom+1))
         {
-            return RoomController.instance.FindRoom(xRoom, yRoom+1);
+            return true;
         }
-
-        return null;
+        return false;
     }
-    public Room GetBottom()
+    public bool GetBottom()
     {
         if(RoomController.instance.DoesRoomExist(xRoom, yRoom-1))
         {
-            return RoomController.instance.FindRoom(xRoom, yRoom-1);
+            return true;
         }
-
-        return null;
+        return false;
     }
     
 
