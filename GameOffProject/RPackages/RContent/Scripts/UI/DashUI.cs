@@ -2,7 +2,6 @@
 // Created by alexandre buzon on 17
 
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Rezoskour.Content
 {
@@ -94,19 +93,20 @@ namespace Rezoskour.Content
         {
             //int currentDashIndex = dashSystem.CurrentDashIndex;
 
-            //Todo: use LeanTween to move dashList1 and dashList2
-            dashList1.transform.localPosition = new Vector3(dashList1.transform.localPosition.x - 1, 0f, 0f);
-            dashList2.transform.localPosition = new Vector3(dashList2.transform.localPosition.x - 1, 0f, 0f);
-
-            if ((int)dashList1.transform.localPosition.x == -nbDash)
+            LeanTween.moveLocalX(dashList1, dashList1.transform.localPosition.x - 1, 0.2f).setOnComplete(() =>
             {
-                dashList1.transform.localPosition = new Vector3(nbDash, 0f, 0f);
-            }
-
-            if ((int)dashList2.transform.localPosition.x == -nbDash)
+                if ((int)dashList1.transform.localPosition.x == -nbDash)
+                {
+                    dashList1.transform.localPosition = new Vector3(nbDash, 0f, 0f);
+                }
+            });
+            LeanTween.moveLocalX(dashList2, dashList2.transform.localPosition.x - 1, 0.2f).setOnComplete(() =>
             {
-                dashList2.transform.localPosition = new Vector3(nbDash, 0f, 0f);
-            }
+                if ((int)dashList2.transform.localPosition.x == -nbDash)
+                {
+                    dashList2.transform.localPosition = new Vector3(nbDash, 0f, 0f);
+                }
+            });
         }
 
         private void MoveToIndex()

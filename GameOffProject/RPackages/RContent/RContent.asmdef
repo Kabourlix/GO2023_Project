@@ -4,7 +4,8 @@
     "references": [
         "KCore",
         "KCharacter",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "LeanTween"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
