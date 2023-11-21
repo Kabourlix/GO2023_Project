@@ -13,8 +13,9 @@ namespace Rezoskour.Content
         {
             public string name;
             public SpawnerData spawnerData;
+            public EnemyData enemyData;
         }
-
+        private EnemyManager enemyManager;
         public GridControler grid;
         public RandomSpawner[] spawnerData;
 
@@ -31,9 +32,7 @@ namespace Rezoskour.Content
                 int randomIndex = Random.Range(0, grid.availablePoints.Count - 1);
                 Vector2 randomPosition = grid.availablePoints[randomIndex];
                 grid.availablePoints.RemoveAt(randomIndex);
-                GameObject go = Instantiate(data.spawnerData.itemToSpawn, transform);
-                go.transform.position = randomPosition;
-                go.name = data.name + " " + i;
+                var enemy = enemyManager.SpawnEnemy(data.enemyData, randomPosition, Quaternion.identity);
             }
         }
         public void InitializeObjectSpawning()

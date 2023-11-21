@@ -1,30 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class Room : MonoBehaviour
+public class MiniMapRoom : MonoBehaviour
 {
-    public int width;
-    
-    public int height;
-    
-    public int xRoom;
-    
-    public int yRoom;
-    
-    private bool updatedDoors = false;
-    
-    public bool isMiniMapRoom = false;
-    
-    public Room(int xRoom, int yRoom)
-    {
-        this.xRoom = xRoom;
-        this.yRoom = yRoom;
-    }
-    
-    
     public Door leftDoor;
     
     public Door rightDoor;
@@ -35,14 +14,13 @@ public class Room : MonoBehaviour
     
     public List<Door> doors = new List<Door>();
 
+    public int xPos;    
+    public int yPos;
+    
+    public bool isVisited = false;
+
     private void Start()
     {
-        if(RoomController.instance == null)
-        {
-            Debug.LogError("No RoomController instance found.");
-            return;
-        }
-
         Door[] ds = GetComponentsInChildren<Door>();
         
         foreach(Door door in ds)
@@ -66,19 +44,18 @@ public class Room : MonoBehaviour
                     break;
             }
         }
-        RoomController.instance.RegisterRoom(this);
     }
-
-    private void Update()
+    public void HideRoom()
     {
-        if(name.Contains("End") && !updatedDoors)
+        if (!isVisited)
         {
-            RemoveUnconnectedDoors();
-            updatedDoors = true;
+            gameObject.SetActive(false);
         }
-        
+        else
+        {
+            gameObject.SetActive(true);
+        }
     }
-
     public void RemoveUnconnectedDoors()
     {
         foreach (Door door in doors)
@@ -118,27 +95,27 @@ public class Room : MonoBehaviour
 
     public bool GetRight()
     {
-        int tempx = xRoom + 1;
-        if(RoomController.instance.DoesRoomExist(tempx, yRoom))
+        int tempx = xPos + 1;
+        if(RoomController.instance.DoesRoomExist(tempx, yPos))
         {
-            Debug.Log("Room exists to the right."+ xRoom + " " + yRoom);
+            Debug.Log("Room exists to the right."+ xPos + " " + yPos);
             return true;
         }
         return false;
     }
     public bool GetLeft()
     {
-        int tempx = xRoom - 1;
-        if(RoomController.instance.DoesRoomExist(tempx, yRoom))
+        int tempx = xPos - 1;
+        if(RoomController.instance.DoesRoomExist(tempx, yPos))
         {
-            Debug.Log("Room exists to the left."+ xRoom + " " + yRoom);
+            Debug.Log("Room exists to the left."+ xPos + " " + yPos);
             return true;
         }
         return false;
     }
     public bool GetTop()
     {
-        if(RoomController.instance.DoesRoomExist(xRoom, yRoom+1))
+        if(RoomController.instance.DoesRoomExist(xPos, yPos+1))
         {
             return true;
         }
@@ -146,33 +123,11 @@ public class Room : MonoBehaviour
     }
     public bool GetBottom()
     {
-        if(RoomController.instance.DoesRoomExist(xRoom, yRoom-1))
+        if(RoomController.instance.DoesRoomExist(xPos, yPos-1))
         {
             return true;
         }
         return false;
-    }
-    
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, new Vector3(width, height));
-    }
-    
-
-    public Vector3 GetRoomCenter()
-    {
-        return new Vector3(xRoom * width, yRoom * height);
-    }
-    
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Player")
-        {
-            Debug.Log("Player entered room.");
-            RoomController.instance.OnPlayerEnterRoom(this);
-        }
     }
     
 }

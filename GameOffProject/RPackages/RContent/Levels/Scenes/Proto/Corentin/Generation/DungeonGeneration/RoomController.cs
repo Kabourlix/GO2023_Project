@@ -29,12 +29,15 @@ public class RoomController : MonoBehaviour
     Queue<RoomInfo> loadRoomQueue = new Queue<RoomInfo>();
     
     public List<Room> loadedRooms = new List<Room>();
+    public List<MiniMapRoom> loadedRoomsMM = new List<MiniMapRoom>();
     
     bool isLoadingRoom = false;
 
     bool spawnedBossRoom = false;
     
     bool updatedRoom = false;
+    
+    bool bossIsSpawned = false;
     private void Awake()
     {
         instance = this;
@@ -56,11 +59,17 @@ public class RoomController : MonoBehaviour
             if(!spawnedBossRoom)
             {
                 StartCoroutine(SpawnBossRoom());
-            }else if(spawnedBossRoom && !updatedRoom)
+            }else if(spawnedBossRoom && !updatedRoom && bossIsSpawned)
             {
                 foreach (Room room in loadedRooms)
                 {
                     room.RemoveUnconnectedDoors();
+                }
+
+                foreach (MiniMapRoom roomMM in loadedRoomsMM)
+                {
+                    roomMM.RemoveUnconnectedDoors();
+                    roomMM.HideRoom();
                 }
                 updatedRoom = true;
             }
@@ -74,7 +83,7 @@ public class RoomController : MonoBehaviour
     IEnumerator SpawnBossRoom()
     {
         spawnedBossRoom = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         if (loadRoomQueue.Count == 0)
         {
             Room bossRoom = loadedRooms[loadedRooms.Count - 1];
@@ -83,6 +92,7 @@ public class RoomController : MonoBehaviour
             var roomToRemove = loadedRooms.Single(r => r.xRoom == tempRoom.xRoom && r.yRoom == tempRoom.yRoom);
             loadedRooms.Remove(roomToRemove);
             LoadRoom("End", tempRoom.xRoom, tempRoom.yRoom);
+            bossIsSpawned = true;
         }
     }
     public void LoadRoom(String name,int x, int y)
@@ -108,13 +118,26 @@ public class RoomController : MonoBehaviour
     {
         if(!DoesRoomExist(currentLoadRoomData.xRi, currentLoadRoomData.yRi))
         {
-            var roomMM = Instantiate(roomMiniMap, new Vector3(currentLoadRoomData.xRi * 3.5f, currentLoadRoomData.yRi * 2.3f), Quaternion.identity);
-            room.transform.position = new Vector3(currentLoadRoomData.xRi * room.width, currentLoadRoomData.yRi * room.height);
+            var roomGO = Instantiate(roomMiniMap, new Vector3(currentLoadRoomData.xRi * 3.5f, currentLoadRoomData.yRi * 2.3f), Quaternion.identity);
+            roomGO.transform.parent = transform;
+            MiniMapRoom miniMapRoom = roomGO.GetComponent<MiniMapRoom>();
+            miniMapRoom.xPos = currentLoadRoomData.xRi;
+            miniMapRoom.yPos = currentLoadRoomData.yRi;
+            if(currentLoadRoomData.name == "Start")
+            {
+                miniMapRoom.isVisited = true;
+            }
+            else
+            {
+                miniMapRoom.isVisited = false;
+            }
+            roomGO.name = "Minimap" + "-" + currentLoadRoomData.name + " " + miniMapRoom.xPos + ", " + miniMapRoom.yPos;
+            loadedRoomsMM.Add(miniMapRoom);
+            room.transform.position = new Vector3((currentLoadRoomData.xRi * room.width),
+                (currentLoadRoomData.yRi * room.height));
             room.xRoom = currentLoadRoomData.xRi;
             room.yRoom = currentLoadRoomData.yRi;
             room.name = currentWorldName + "-" + currentLoadRoomData.name + " " + room.xRoom + ", " + room.yRoom;
-            roomMM.name = "Minimap" + "-" + currentLoadRoomData.name + " " + room.xRoom + ", " + room.yRoom;
-            roomMM.transform.parent = transform;
             room.transform.parent = transform;
             isLoadingRoom = false;
             if (loadedRooms.Count == 0)
@@ -122,6 +145,7 @@ public class RoomController : MonoBehaviour
                 CameraController.instance.currentRoom = room;
             }
             loadedRooms.Add(room);
+            
         }
         else
         {
@@ -153,13 +177,25 @@ public class RoomController : MonoBehaviour
     {
         CameraController.instance.currentRoom = room;
         currentRoom = room;
-        UpdateMiniMapPosition();
+        UpdateMiniMap();
         UpdateRooms();
     }
 
-    private void UpdateMiniMapPosition()
+    private void UpdateMiniMap()
     {
         miniMapCamera.transform.position = new Vector3(currentRoom.xRoom * 3.5f, currentRoom.yRoom * 2.3f, -10);
+        foreach (MiniMapRoom room in loadedRoomsMM)
+        {
+            if (currentRoom != null)
+            {
+                if (room.xPos == currentRoom.xRoom && room.yPos == currentRoom.yRoom)
+                {
+                    room.isVisited = true;
+                }
+            }
+            room.HideRoom();
+        }
+        
     }
 
     private void UpdateRooms()

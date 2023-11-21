@@ -16,7 +16,7 @@ public class Door : MonoBehaviour
     
     public GameObject doorCollider;
     
-    private float widthOffset = 2.4f;
+    private float widthOffset = 3f;
 
     private GameObject player;
     private void Start()
@@ -31,16 +31,16 @@ public class Door : MonoBehaviour
             switch (doorType)
             {
                 case DoorType.bottom:
-                    player.transform.position = new Vector2(transform.position.x, transform.position.y - widthOffset);
+                    player.transform.position = new Vector3(transform.position.x, transform.position.y - widthOffset,1);
                     break;
                 case DoorType.top:
-                    player.transform.position = new Vector2(transform.position.x, transform.position.y + widthOffset);
+                    player.transform.position = new Vector3(transform.position.x, transform.position.y + widthOffset,1);
                     break;
                 case DoorType.right:
-                    player.transform.position = new Vector2(transform.position.x + widthOffset, transform.position.y );
+                    player.transform.position = new Vector3(transform.position.x + widthOffset, transform.position.y,1 );
                     break;
                 case DoorType.left:
-                    player.transform.position = new Vector2(transform.position.x - widthOffset, transform.position.y);
+                    player.transform.position = new Vector3(transform.position.x - widthOffset, transform.position.y,1);
                     break;
                 
             }

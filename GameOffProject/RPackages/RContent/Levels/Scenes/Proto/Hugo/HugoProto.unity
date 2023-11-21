@@ -610,6 +610,17 @@ PrefabInstance:
       propertyPath: enemyParent
       value: 
       objectReference: {fileID: 1886308894}
+    - target: {fileID: 1892610688662628961, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
+        type: 3}
+      propertyPath: enemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892610688662628961, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
+        type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 4902046168245179938, guid: e22a270fdaf29a7409fee7e900ae6de0,
+        type: 3}
     - target: {fileID: 2090843259558772470, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
         type: 3}
       propertyPath: playerTransform

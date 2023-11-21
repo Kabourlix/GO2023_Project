@@ -440,6 +440,7 @@ MonoBehaviour:
   height: 9
   xRoom: 0
   yRoom: 0
+  isMiniMapRoom: 0
   leftDoor: {fileID: 147564295}
   rightDoor: {fileID: 1023675612}
   topDoor: {fileID: 1139705590}
