@@ -10,9 +10,9 @@
                     "type": "Button",
                     "id": "ab7fc29d-2263-4558-8986-c6c8214da935",
                     "expectedControlType": "Button",
-                    "processors": "StickDeadzone(min=1.401298E-45,max=1)",
+                    "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "DashPos",
@@ -27,34 +27,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "b7dd758e-072f-49f8-8471-c91d7ff5bff7",
-                    "path": "<Joystick>/stick",
-                    "interactions": "Press(pressPoint=0.01,behavior=1)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3f4ed8ef-c218-4242-b0aa-3ca8a18701e4",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8bb8c670-854b-43cf-a1e9-b3017054035f",
-                    "path": "<Joystick>/stick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DashPos",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
