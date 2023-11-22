@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashSpeed: 20
   dashDuration: 0.5
-  dashCooldown: 0.3
-  name: 4
+  dashCooldown: 1
+  dashName: 4
+  icon: {fileID: 0}
