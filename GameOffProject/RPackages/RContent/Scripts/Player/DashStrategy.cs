@@ -2,6 +2,7 @@
 
 #nullable enable
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,62 +10,74 @@ using UnityEngine;
 
 namespace Rezoskour.Content
 {
-    public abstract class DashStrategy
+    public abstract class DashStrategy : IDisposable
     {
         public const float TOLERANCE = 0.1f;
-        public abstract float DashSpeed { get; }
-        public abstract float DashDuration { get; }
-        public abstract float DashCooldown { get; }
+        public float DashSpeed { get; }
+        public float DashDuration { get; }
+        public float DashCooldown { get; }
+        public DashNames Name { get; }
+
+        protected readonly float playerRadius;
 
         public float DashDistance => DashSpeed * DashDuration;
 
-        protected Dictionary<Vector2, Vector2> Trajectory = new();
-        protected Queue<Vector2> TrajectoryQueue = new();
-
+        protected List<(Vector3, Vector3, float)> Trajectory { get; } = new();
+        protected int currentTrajectoryIndex = 0;
         protected Vector2? currentTarget = null;
 
         protected LayerMask layerMask;
 
-        public DashStrategy(LayerMask _layerMask)
+        private float distanceDone;
+
+        protected DashStrategy(LayerMask _layerMask, float _playerRadius, DashData _data)
         {
             layerMask = _layerMask;
+            playerRadius = _playerRadius;
+            DashSpeed = _data.DashSpeed;
+            DashDuration = _data.DashDuration;
+            DashCooldown = _data.DashCooldown;
+            Name = _data.Name;
+        }
+
+        public void Dispose()
+        {
+            Trajectory.Clear();
+            currentTrajectoryIndex = 0;
+            currentTarget = null;
         }
 
         public abstract Vector3[] GetTrajectories(Vector2 _origin, Vector2 _direction, float _maxDistance);
 
-        public void FillQueue()
-        {
-            TrajectoryQueue.Clear();
-            foreach (KeyValuePair<Vector2, Vector2> kv in Trajectory)
-            {
-                TrajectoryQueue.Enqueue(kv.Key);
-            }
-        }
 
         /// <summary>
         /// Return true if the movement is complete.
         /// </summary>
         /// <returns></returns>
-        public virtual bool PerformMovement(Transform _player)
+        public bool PerformMovement(Transform _player, float _deltaTime)
         {
             if (currentTarget == null)
             {
-                if (TrajectoryQueue.Count == 0)
+                if (currentTrajectoryIndex >= Trajectory.Count)
                 {
                     return true;
                 }
 
-                currentTarget = TrajectoryQueue.Dequeue();
+                currentTarget = Trajectory[currentTrajectoryIndex].Item1;
+                distanceDone = 0;
             }
 
             Debug.Log($"Moving to {currentTarget}");
-            Vector2 direction = (currentTarget.Value - (Vector2)_player.position).normalized;
-            _player.position += DashSpeed * Time.deltaTime * (Vector3)direction;
+            Vector2 direction = Trajectory[currentTrajectoryIndex - 1].Item2;
+            distanceDone += DashSpeed * _deltaTime;
+            _player.position += DashSpeed * _deltaTime * (Vector3)direction;
 
 
-            if ((_player.position - (Vector3)currentTarget).magnitude < TOLERANCE)
+            if (distanceDone >= Trajectory[currentTrajectoryIndex].Item3)
             {
                 currentTarget = null;
+                currentTrajectoryIndex++;
+                distanceDone = 0;
             }
 
             return false;
@@ -73,14 +86,25 @@ namespace Rezoskour.Content
         protected void ResetTrajectory(Vector2 _origin, Vector2 _direction)
         {
             Trajectory.Clear();
-            Trajectory.Add(_origin, _direction);
+            currentTrajectoryIndex = 1;
+            Trajectory.Add((_origin, _direction, 0));
         }
 
         protected Vector3[] ConvertTrajectoryToLineRendererPoints(Vector2 _origin)
         {
-            Vector3[] traj = Trajectory.Keys.Select(_dummy => (Vector3)(_dummy - _origin)).ToArray();
+            Vector3[] traj = new Vector3[Trajectory.Count];
+            for (int i = 0; i < Trajectory.Count; i++)
+            {
+                traj[i] = Trajectory[i].Item1 - (Vector3)_origin;
+            }
+
             traj[0] = Vector3.zero;
             return traj;
+        }
+
+        protected Vector3 GetCloseToWall(Vector3 _wallHit, Vector3 _direction)
+        {
+            return _wallHit - playerRadius * _direction;
         }
     }
 }

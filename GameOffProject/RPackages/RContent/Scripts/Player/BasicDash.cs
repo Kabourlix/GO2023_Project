@@ -13,16 +13,8 @@ namespace Rezoskour.Content
     public class BasicDash : DashStrategy
     {
         /// <inheritdoc />
-        public override float DashSpeed => 15f;
-
-        /// <inheritdoc />
-        public override float DashDuration => 1f;
-
-        /// <inheritdoc />
-        public override float DashCooldown => 0.1f;
-
-        /// <inheritdoc />
-        public BasicDash(LayerMask _layerMask) : base(_layerMask)
+        public BasicDash(LayerMask _layerMask, float _playerRadius, DashData _data) : base(
+            _layerMask, _playerRadius, _data)
         {
         }
 
@@ -34,11 +26,12 @@ namespace Rezoskour.Content
 
             if (hit.collider)
             {
-                Trajectory.Add(hit.point, Vector2.zero);
+                Trajectory.Add((GetCloseToWall(hit.point, _direction), Vector3.zero, hit.distance));
             }
             else
             {
-                Trajectory.Add(_origin + _maxDistance * _direction, Vector2.zero);
+                Trajectory.Add((GetCloseToWall(_origin + _maxDistance * _direction, _direction), Vector3.zero,
+                    _maxDistance));
             }
 
             return ConvertTrajectoryToLineRendererPoints(_origin);
