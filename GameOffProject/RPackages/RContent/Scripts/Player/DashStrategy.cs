@@ -37,7 +37,7 @@ namespace Rezoskour.Content
             DashSpeed = _data.DashSpeed;
             DashDuration = _data.DashDuration;
             DashCooldown = _data.DashCooldown;
-            Name = _data.Name;
+            Name = _data.DashName;
         }
 
         public void Dispose()
@@ -67,7 +67,6 @@ namespace Rezoskour.Content
                 distanceDone = 0;
             }
 
-            Debug.Log($"Moving to {currentTarget}");
             Vector2 direction = Trajectory[currentTrajectoryIndex - 1].Item2;
             distanceDone += DashSpeed * _deltaTime;
             _player.position += DashSpeed * _deltaTime * (Vector3)direction;

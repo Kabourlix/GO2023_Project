@@ -1,6 +1,7 @@
 ﻿// Created by Kabourlix Cendrée on 22/11/2023
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Rezoskour.Content
 {
@@ -10,11 +11,16 @@ namespace Rezoskour.Content
         [SerializeField] private float dashSpeed = 15f;
         [SerializeField] private float dashDuration = 1f;
         [SerializeField] private float dashCooldown = 0.1f;
-        [SerializeField] private DashNames name = DashNames.Basic;
+
+        [FormerlySerializedAs("name")] [SerializeField]
+        private DashNames dashName = DashNames.Basic;
+
+        [SerializeField] private Sprite icon = null!;
 
         public float DashSpeed => dashSpeed;
         public float DashDuration => dashDuration;
         public float DashCooldown => dashCooldown;
-        public DashNames Name => name;
+        public DashNames DashName => dashName;
+        public Sprite Icon => icon;
     }
 }

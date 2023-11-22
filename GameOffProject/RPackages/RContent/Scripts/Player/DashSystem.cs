@@ -48,6 +48,7 @@ namespace Rezoskour.Content
 
         private bool wantToDash;
         private bool isDashing;
+        private bool isReleaseToBeConsidered;
 
         private readonly Dictionary<DashNames, DashStrategy> possibleDashes = new();
 
@@ -63,7 +64,7 @@ namespace Rezoskour.Content
 
             foreach (DashData data in dashDataArray)
             {
-                dashDataDict.Add(data.Name, data);
+                dashDataDict.Add(data.DashName, data);
             }
         }
 
@@ -110,7 +111,8 @@ namespace Rezoskour.Content
                 Debug.Log("Finished dashing");
                 isDashing = false;
                 currentDashIndex = (currentDashIndex + 1) % dashList.Count;
-                cdSystem?.StartCoolDown(COOLDOWN_ID);
+                cdSystem?.UpdateCoolDownDuration(COOLDOWN_ID, dashList[currentDashIndex].DashCooldown, true);
+                cdSystem?.StartCoolDown(COOLDOWN_ID, true);
             }
         }
 
@@ -169,24 +171,24 @@ namespace Rezoskour.Content
 
         private void DashStartedHandler(InputAction.CallbackContext _ctx)
         {
-            if (isDashing)
+            if (isDashing || !(cdSystem?.IsCoolDownFinished(COOLDOWN_ID) ?? true))
             {
                 return;
             }
 
-            Debug.Log("Dash started");
+            isReleaseToBeConsidered = true;
             wantToDash = true;
             UpdateLineRenderer(Inputs.Player.DashPos.ReadValue<Vector2>());
         }
 
         private void DashReleasedHandler(InputAction.CallbackContext _ctx)
         {
-            if (isDashing)
+            if (isDashing || !isReleaseToBeConsidered)
             {
                 return;
             }
 
-            Debug.Log("Dash released");
+            isReleaseToBeConsidered = false;
             wantToDash = false;
             isDashing = true;
             OnDashEvent?.Invoke();
