@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7d0ef9e30c646bd952d73f021d44e28, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fd04220ab2241c8a873ac6e2b00187f, type: 3}
   m_Name: ZigZagDash
   m_EditorClassIdentifier: 
-  dashSpeed: 20
-  dashDuration: 0.5
-  dashCooldown: 1
-  dashName: 4
+  dashSpeed: 15
+  dashDuration: 1
+  dashCooldown: 0.1
+  dashName: 0
   icon: {fileID: 0}
+  zigCount: 0
+  angleInDegree: 0
