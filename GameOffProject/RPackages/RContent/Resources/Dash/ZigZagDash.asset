@@ -15,7 +15,7 @@ MonoBehaviour:
   dashSpeed: 15
   dashDuration: 1
   dashCooldown: 0.1
-  dashName: 0
+  dashName: 4
   icon: {fileID: 0}
-  zigCount: 0
-  angleInDegree: 0
+  zigCount: 4
+  angleInDegree: 35
