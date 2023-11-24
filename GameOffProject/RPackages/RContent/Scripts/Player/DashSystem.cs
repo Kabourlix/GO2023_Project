@@ -1,5 +1,4 @@
-// Created by Kabourlix Cendrée on 14/11/2023
-
+// Created by Hugo Da Maïa on 16/11/2023
 
 #nullable enable
 
@@ -16,7 +15,8 @@ public enum DashNames
     Short,
     Long,
     Bouncing,
-    Zigzag
+    Zigzag,
+    Func
 }
 
 namespace Rezoskour.Content
@@ -33,6 +33,7 @@ namespace Rezoskour.Content
 
         [FormerlySerializedAs("dashData")] [SerializeField]
         private DashData[] dashDataArray = null!;
+
         public const float TOLERANCE = 0.01f;
         private const string COOLDOWN_ID = "DashSystem";
 
@@ -82,11 +83,13 @@ namespace Rezoskour.Content
                 new BouncingDash(ignoredMask, collider.radius, dashDataDict[DashNames.Bouncing]));
             possibleDashes.Add(DashNames.Zigzag,
                 new ZigZagDash(ignoredMask, collider.radius, (ZigZagDashData)dashDataDict[DashNames.Zigzag]));
+            possibleDashes.Add(DashNames.Func,
+                new FunctionDash(ignoredMask, collider.radius, (FuncDashData)dashDataDict[DashNames.Func]));
             //possibleDashes.Add(DashNames.Zigzag,
             //new BasicDash(ignoredMask, collider.radius, dashDataDict[DashNames.Zigzag]));
 
 
-            AddDash(DashNames.Zigzag);
+            AddDash(DashNames.Func);
             // AddDash(DashNames.Bouncing);
             // AddDash(DashNames.Long);
             // AddDash(DashNames.Bouncing);
@@ -168,6 +171,7 @@ namespace Rezoskour.Content
         }
 
         #region Inputs callbacks
+
         private void OnDashUpdate(InputAction.CallbackContext _ctx)
         {
             if (!wantToDash)
@@ -205,6 +209,7 @@ namespace Rezoskour.Content
             OnDashEvent?.Invoke();
             lineRenderer.positionCount = 0;
         }
+
         #endregion
     }
 }

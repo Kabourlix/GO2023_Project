@@ -3,20 +3,34 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Rezoskour.Content
 {
+    public enum TrajFunction
+    {
+        Sin,
+        Cos
+    }
+
     internal class FunctionDash : DashStrategy
     {
-        private const int SAMPLE_POINTS = 200;
-        private readonly Func<float, float> trajFunction;
+        private const int SAMPLE_POINTS = 300;
+        private readonly Func<float, float> trajDerivativeFunction;
+
+
+        private Dictionary<TrajFunction, Func<float, float>> derivativePreTrajFunction = new()
+        {
+            { TrajFunction.Sin, _x => 2 * Mathf.PI * 0.1f * 0.1f * Mathf.Cos(2 * Mathf.PI * 0.1f * _x) },
+            { TrajFunction.Cos, _x => -Mathf.Sin(_x) }
+        };
 
         /// <inheritdoc />
-        public FunctionDash(LayerMask _layerMask, float _playerRadius, DashData _data, Func<float, float> _trajFunction)
+        public FunctionDash(LayerMask _layerMask, float _playerRadius, FuncDashData _data)
             : base(_layerMask, _playerRadius, _data)
         {
-            trajFunction = _trajFunction;
+            trajDerivativeFunction = derivativePreTrajFunction[_data.TypeOfTraj];
         }
 
         /// <inheritdoc />
@@ -27,19 +41,38 @@ namespace Rezoskour.Content
             float deltaD = _maxDistance / (SAMPLE_POINTS - 1);
 
             Vector2 start = _origin;
-            Vector2 dir = Vector2.zero;
+            Vector2 dir = GetDirection(0, deltaD, ud, un);
+            ResetTrajectory(_origin, dir);
+            float remaingDist = _maxDistance;
             for (int i = 0; i < SAMPLE_POINTS; i++)
             {
-                dir = GetDirection((i + 1) * deltaD, ud, un);
-                //RaycastHit2D hit = Physics2D.Raycast(start,dir,) Réflechir pour la distance.
+                float distance = dir.magnitude;
+                RaycastHit2D hit = Physics2D.Raycast(start, dir, distance, ~layerMask);
+                dir = GetDirection(i + 1, deltaD, ud, un);
+                remaingDist -= distance;
+                if (hit.collider == null)
+                {
+                    start += dir;
+                    Trajectory.Add((GetCloseToWall(start,dir), dir, distance));
+                }
+                else
+                {
+                    Trajectory.Add((GetCloseToWall(hit.point, dir), Vector3.zero, hit.distance));
+                    break;
+                }
+
+                if (remaingDist <= 0)
+                {
+                    break;
+                }
             }
 
-            return Array.Empty<Vector3>();
+            return ConvertTrajectoryToLineRendererPoints(_origin);
         }
 
-        private Vector2 GetDirection(float _d, Vector2 _dirUnit, Vector2 _normalUnit)
+        private Vector2 GetDirection(int _i, float _delta, Vector2 _dirUnit, Vector2 _normalUnit)
         {
-            return _d * _dirUnit + trajFunction.Invoke(_d) * _normalUnit;
+            return _delta * _dirUnit + trajDerivativeFunction.Invoke(_i * _delta) * _normalUnit;
         }
     }
 }

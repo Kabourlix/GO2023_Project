@@ -1,4 +1,4 @@
-// Created by Kabourlix Cendrée on 14/11/2023
+// Created by Hugo Da Maïa on 16/11/2023
 
 #nullable enable
 
@@ -69,7 +69,8 @@ namespace Rezoskour.Content
 
             Vector2 direction = Trajectory[currentTrajectoryIndex - 1].Item2;
             distanceDone += DashSpeed * _deltaTime;
-            _player.position += DashSpeed * _deltaTime * (Vector3)direction;
+            _player.position = Vector3.MoveTowards(_player.position, currentTarget.Value, DashSpeed * _deltaTime);
+            //_player.position += DashSpeed * _deltaTime * (Vector3)direction;
 
 
             if (distanceDone >= Trajectory[currentTrajectoryIndex].Item3)
