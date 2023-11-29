@@ -1,5 +1,6 @@
 // Created by Hugo Da Maïa on 23/11/2023
 
+
 #nullable enable
 
 using System;
@@ -16,21 +17,21 @@ namespace Rezoskour.Content
 
     internal class FunctionDash : DashStrategy
     {
-        private const int SAMPLE_POINTS = 300;
+        private bool IsBouncing { get; }
         private readonly Func<float, float> trajDerivativeFunction;
 
-
-        private Dictionary<TrajFunction, Func<float, float>> derivativePreTrajFunction = new()
+        private readonly Dictionary<TrajFunction, Func<float, float>> derivativePreTrajFunction = new()
         {
             { TrajFunction.Sin, _x => 2 * Mathf.PI * 0.1f * 0.1f * Mathf.Cos(2 * Mathf.PI * 0.1f * _x) },
             { TrajFunction.Cos, _x => -Mathf.Sin(_x) }
         };
 
         /// <inheritdoc />
-        public FunctionDash(LayerMask _layerMask, float _playerRadius, FuncDashData _data)
+        public FunctionDash(LayerMask _layerMask, float _playerRadius, FuncDashData _data, bool _shallBounce = false)
             : base(_layerMask, _playerRadius, _data)
         {
             trajDerivativeFunction = derivativePreTrajFunction[_data.TypeOfTraj];
+            IsBouncing = _shallBounce;
         }
 
         /// <inheritdoc />
@@ -53,12 +54,20 @@ namespace Rezoskour.Content
                 if (hit.collider == null)
                 {
                     start += dir;
-                    Trajectory.Add((GetCloseToWall(start,dir), dir, distance));
+                    Trajectory.Add((GetCloseToWall(start, dir), dir, distance));
                 }
                 else
                 {
                     Trajectory.Add((GetCloseToWall(hit.point, dir), Vector3.zero, hit.distance));
-                    break;
+                    if (IsBouncing)
+                    {
+                        ud = BouncingDash.ComputeBouncingDirection(ud, hit.normal);
+                        un = BouncingDash.ComputeBouncingDirection(un, hit.normal);
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
 
                 if (remaingDist <= 0)
@@ -74,5 +83,7 @@ namespace Rezoskour.Content
         {
             return _delta * _dirUnit + trajDerivativeFunction.Invoke(_i * _delta) * _normalUnit;
         }
+
+        private const int SAMPLE_POINTS = 300;
     }
 }

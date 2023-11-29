@@ -1,5 +1,6 @@
 ﻿// Created by Kabourlix Cendrée on 19/11/2023
 
+
 #nullable enable
 
 using UnityEngine;
@@ -43,10 +44,10 @@ namespace Rezoskour.Content
         }
 
         /// <summary>
-        /// Provide the new direction when bouncing on a wall using optic laws to get the new direction.
-        /// The wall normal shall be directed toward the player.
+        ///     Provide the new direction when bouncing on a wall using optic laws to get the new direction.
+        ///     The wall normal shall be directed toward the player.
         /// </summary>
-        private Vector2 ComputeBouncingDirection(Vector2 _initDirection, Vector2 _wallNormal)
+        public static Vector2 ComputeBouncingDirection(Vector2 _initDirection, Vector2 _wallNormal)
         {
             Vector2 unitNormal = _wallNormal.normalized;
             return _initDirection - 2 * Vector2.Dot(_initDirection, unitNormal) * unitNormal;
