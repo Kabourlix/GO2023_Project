@@ -1,9 +1,4 @@
-<<<<<<< Updated upstream
-// Copyrighted by team Rézoskour
-// Created by alexandre buzon on 15
-=======
 // Created by Kabourlix Cendrée on 14/11/2023
->>>>>>> Stashed changes
 
 #nullable enable
 
