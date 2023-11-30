@@ -1,3 +1,4 @@
+// Created by Kabourlix Cendrée on 20/11/2023
 
 using System;
 using PlasticGui.Configuration.CloudEdition.Welcome;
@@ -16,6 +17,7 @@ namespace Rezoskour.Content
             public SpawnerData spawnerData;
             public EnemyData enemyData;
         }
+
         private IEnemyManager enemyManager;
         public GridControler grid;
         public RandomSpawner[] spawnerData;
@@ -25,19 +27,22 @@ namespace Rezoskour.Content
             enemyManager = KServiceInjection.Get<IEnemyManager>();
             //grid = GetComponentInChildren<GridControler>();
         }
-        void SpawnObjects(RandomSpawner data)
+
+        private void SpawnObjects(RandomSpawner data)
         {
-            int randomIteration = Random.Range(data.spawnerData.minSpawn, data.spawnerData.maxSpawn +1);
-            
+            int randomIteration = Random.Range(data.spawnerData.minSpawn, data.spawnerData.maxSpawn + 1);
+
             for (int i = 0; i < randomIteration; i++)
             {
                 int randomIndex = Random.Range(0, grid.availablePoints.Count - 1);
                 Vector2 randomPosition = grid.availablePoints[randomIndex];
                 grid.availablePoints.RemoveAt(randomIndex);
-                var enemy = enemyManager.SpawnEnemy(data.enemyData, randomPosition, Quaternion.identity);
-                
+
+                Enemy enemy = enemyManager.SpawnEnemy(data.enemyData, randomPosition, Quaternion.identity);
+                enemy.SetActive(false);
             }
         }
+
         public void InitializeObjectSpawning()
         {
             foreach (RandomSpawner data in spawnerData)
@@ -45,6 +50,5 @@ namespace Rezoskour.Content
                 SpawnObjects(data);
             }
         }
-        
     }
 }
