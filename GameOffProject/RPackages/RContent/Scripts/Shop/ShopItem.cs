@@ -1,11 +1,12 @@
-﻿// Created by Kabourlix Cendrée on 12/11/2023
+﻿// Copyrighted by team Rézoskour
+// Created by alexandre buzon on 17
 
 using UnityEngine;
 
 namespace Rezoskour.Content.Shop
 {
     [CreateAssetMenu(fileName = "ShopItem", menuName = "Rezoskour/Shop Item", order = 0)]
-    public class ShopItem : ScriptableObject, IShopItem
+    public abstract class ShopItem : ScriptableObject, IShopItem
     {
         [SerializeField] private string objectName;
         [SerializeField] private string objectDescription;
@@ -17,5 +18,7 @@ namespace Rezoskour.Content.Shop
         public string ObjectIconPath => objectIconPath;
         public int Price => price;
         public bool IsAvailable { get; set; }
+
+        public abstract void Buy();
     }
 }

@@ -73,12 +73,21 @@ namespace Rezoskour.Content
         {
             int currentMaxHealth = heartsList.Count * 2;
             int newMaxHealth = _maxHealth - currentMaxHealth;
-            if (_maxHealth <= 20 && newMaxHealth % 2 == 0) //Can't have more than 10 hearts and can't have half a heart
+            if (newMaxHealth > 0 && _maxHealth <= 20 &&
+                newMaxHealth % 2 == 0) //Can't have more than 10 hearts and can't have half a heart
             {
                 for (int i = 0; i < newMaxHealth / 2; i++)
                 {
                     GameObject heart = Instantiate(heartPrefab, transform);
                     heartsList.Add(heart.GetComponent<Image>());
+                }
+            }
+            else if (newMaxHealth < 0 && _maxHealth > 2 && newMaxHealth % 2 == 0) //Can't have less than 1 heart
+            {
+                for (int i = 0; i < -newMaxHealth / 2; i++)
+                {
+                    Destroy(heartsList[heartsList.Count - 1].gameObject);
+                    heartsList.RemoveAt(heartsList.Count - 1);
                 }
             }
         }

@@ -16,4 +16,4 @@ MonoBehaviour:
   dashDuration: 1
   dashCooldown: 1
   dashName: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 73985e9adf528de4585117acde72302f, type: 3}
