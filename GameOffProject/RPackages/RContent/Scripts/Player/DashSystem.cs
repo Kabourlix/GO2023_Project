@@ -1,5 +1,9 @@
+<<<<<<< Updated upstream
 // Copyrighted by team Rézoskour
 // Created by alexandre buzon on 15
+=======
+// Created by Kabourlix Cendrée on 14/11/2023
+>>>>>>> Stashed changes
 
 #nullable enable
 
@@ -17,7 +21,8 @@ public enum DashNames
     Long,
     Bouncing,
     Zigzag,
-    Func
+    Func,
+    FuncRebounce
 }
 
 namespace Rezoskour.Content
@@ -27,13 +32,14 @@ namespace Rezoskour.Content
     {
         public List<DashStrategy> DashList { get; } = new();
         public int CurrentDashIndex { get; private set; } = 0;
-        private PlayerInputs Inputs { get; set; } = null!;
 
         [SerializeField] private Camera cam = null!;
         [SerializeField] private LayerMask ignoredMask;
 
         [FormerlySerializedAs("dashData")] [SerializeField]
         private DashData[] dashDataArray = null!;
+
+        private PlayerInputs Inputs { get; set; } = null!;
 
         public const float TOLERANCE = 0.01f;
         private const string COOLDOWN_ID = "DashSystem";
@@ -88,11 +94,14 @@ namespace Rezoskour.Content
                 new ZigZagDash(ignoredMask, collider.radius, (ZigZagDashData)dashDataDict[DashNames.Zigzag]));
             possibleDashes.Add(DashNames.Func,
                 new FunctionDash(ignoredMask, collider.radius, (FuncDashData)dashDataDict[DashNames.Func]));
+            possibleDashes.Add(DashNames.FuncRebounce,
+                new FunctionDash(ignoredMask, collider.radius, (FuncDashData)dashDataDict[DashNames.FuncRebounce],
+                    true));
             //possibleDashes.Add(DashNames.Zigzag,
             //new BasicDash(ignoredMask, collider.radius, dashDataDict[DashNames.Zigzag]));
 
 
-            AddDash(DashNames.Func);
+            AddDash(DashNames.FuncRebounce);
             // AddDash(DashNames.Bouncing);
             // AddDash(DashNames.Long);
             // AddDash(DashNames.Bouncing);
@@ -163,6 +172,7 @@ namespace Rezoskour.Content
 
         public void SwapDash(int _indexA, int _indexB)
         {
+            (DashList[_indexA], DashList[_indexB]) = (DashList[_indexB], DashList[_indexA]);
         }
 
         private void UpdateLineRenderer(Vector2 _mousePos)
