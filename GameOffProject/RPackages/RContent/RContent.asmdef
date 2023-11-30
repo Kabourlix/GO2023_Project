@@ -5,7 +5,8 @@
         "KCore",
         "KCharacter",
         "Unity.InputSystem",
-        "LeanTween"
+        "LeanTween",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7d0ef9e30c646bd952d73f021d44e28, type: 3}
-  m_Name: BouncingDash
+  m_Script: {fileID: 11500000, guid: 11b2106cd6cced24fa5ce23e1b0ce8d3, type: 3}
+  m_Name: SinDash
   m_EditorClassIdentifier: 
-  dashSpeed: 16
-  dashDuration: 0.6
-  dashCooldown: 1
-  dashName: 3
-  icon: {fileID: 21300000, guid: be7c6e686bd0a434bb81d9a1f8f47162, type: 3}
+  objectName: Sin dash
+  objectDescription: 
+  objectIconPath: 
+  price: 15
+  dash: {fileID: 11400000, guid: 78552860019415f44aba9fed72ed8aeb, type: 2}

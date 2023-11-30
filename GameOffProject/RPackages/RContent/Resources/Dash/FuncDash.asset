@@ -16,5 +16,5 @@ MonoBehaviour:
   dashDuration: 1
   dashCooldown: 0.1
   dashName: 5
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 73985e9adf528de4585117acde72302f, type: 3}
   typeOfTraj: 0

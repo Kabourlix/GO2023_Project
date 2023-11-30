@@ -1,10 +1,12 @@
-﻿// Created by Kabourlix Cendrée on 12/11/2023
+﻿// Copyrighted by team Rézoskour
+// Created by alexandre buzon on 12
 
 #nullable enable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+using Random = System.Random;
 
 
 namespace Rezoskour.Content.Shop
@@ -20,6 +22,7 @@ namespace Rezoskour.Content.Shop
             nullShopItem = _nullShopItem;
             ScrapAllObjects();
         }
+
         public void Dispose()
         {
             // TODO release managed resources here
@@ -31,6 +34,7 @@ namespace Rezoskour.Content.Shop
             {
                 return false;
             }
+
             return _customer.TrySpendCurrency(_shopItem.Price);
         }
 
@@ -41,6 +45,7 @@ namespace Rezoskour.Content.Shop
             {
                 return accessibleObjects.OrderBy(_item => rd.Next()).Take(_amount).ToArray();
             }
+
             if (accessibleObjects.Count == _amount)
             {
                 return accessibleObjects.ToArray();
@@ -49,7 +54,6 @@ namespace Rezoskour.Content.Shop
             IShopItem[] objects = new IShopItem[_amount];
             for (int i = 0; i < accessibleObjects.Count; i++)
             {
-
                 objects[i] = i >= accessibleObjects.Count ? nullShopItem : accessibleObjects[i];
             }
 
@@ -59,6 +63,7 @@ namespace Rezoskour.Content.Shop
         private void ScrapAllObjects()
         {
             //TODO Collect all objects from the game
+            Resources.LoadAll<ShopItem>("ShopItems").ToList().ForEach(_item => accessibleObjects.Add(_item));
         }
     }
 }

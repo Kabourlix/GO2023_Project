@@ -1,4 +1,5 @@
-// Created by Hugo Da Maïa on 16/11/2023
+// Copyrighted by team Rézoskour
+// Created by alexandre buzon on 15
 
 #nullable enable
 
@@ -51,6 +52,8 @@ namespace Rezoskour.Content
         private readonly Dictionary<DashNames, DashStrategy> possibleDashes = new();
 
         public event Action? OnDashEvent;
+        public event Action? OnDashAdded;
+        public event Action? OnDashRemoved;
 
         private void Awake()
         {
@@ -61,7 +64,7 @@ namespace Rezoskour.Content
             Inputs.Player.Dash.started += DashStartedHandler;
             Inputs.Player.Dash.canceled += DashReleasedHandler;
             Inputs.Player.DashPos.performed += OnDashUpdate;
-
+            dashDataArray = Resources.LoadAll<DashData>("Dash");
             foreach (DashData data in dashDataArray)
             {
                 dashDataDict.Add(data.DashName, data);
@@ -142,6 +145,8 @@ namespace Rezoskour.Content
             {
                 DashList.Insert(_indexInList, possibleDashes[_name]);
             }
+
+            OnDashAdded?.Invoke();
         }
 
         public void RemoveDash(int _indexToRemove)
@@ -153,6 +158,7 @@ namespace Rezoskour.Content
             }
 
             DashList.RemoveAt(_indexToRemove);
+            OnDashRemoved?.Invoke();
         }
 
         public void SwapDash(int _indexA, int _indexB)
