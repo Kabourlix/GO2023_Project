@@ -699,13 +699,19 @@ PrefabInstance:
     - target: {fileID: 86304214393670064, guid: d393941a19a8df14ba2347b4a6165027,
         type: 3}
       propertyPath: dashDataArray.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 86304214393670064, guid: d393941a19a8df14ba2347b4a6165027,
         type: 3}
       propertyPath: dashDataArray.Array.data[5]
       value: 
       objectReference: {fileID: 11400000, guid: 78552860019415f44aba9fed72ed8aeb,
+        type: 2}
+    - target: {fileID: 86304214393670064, guid: d393941a19a8df14ba2347b4a6165027,
+        type: 3}
+      propertyPath: dashDataArray.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 589ac5ad29fb6434a81bcbc35cad043f,
         type: 2}
     - target: {fileID: 2420715332437404030, guid: d393941a19a8df14ba2347b4a6165027,
         type: 3}
