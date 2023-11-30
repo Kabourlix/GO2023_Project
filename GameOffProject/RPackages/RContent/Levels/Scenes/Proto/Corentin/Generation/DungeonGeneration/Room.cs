@@ -16,6 +16,8 @@ public class Room : MonoBehaviour
     
     private bool updatedDoors = false;
     
+    public GameObject roomMiniMap;
+    
     public bool isMiniMapRoom = false;
     
     public Room(int xRoom, int yRoom)

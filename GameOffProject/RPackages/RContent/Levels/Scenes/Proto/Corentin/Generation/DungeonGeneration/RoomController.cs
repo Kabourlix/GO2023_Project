@@ -18,7 +18,7 @@ public class RoomController : MonoBehaviour
 {
     public Camera miniMapCamera;
     public static RoomController instance;
-    public GameObject roomMiniMap;
+    //public GameObject roomMiniMap;
 
     private String currentWorldName = "Basement";
 
@@ -116,9 +116,10 @@ public class RoomController : MonoBehaviour
 
     public void RegisterRoom(Room room)
     {
-        if(!DoesRoomExist(currentLoadRoomData.xRi, currentLoadRoomData.yRi))
+        if(!DoesRoomExist(currentLoadRoomData.xRi, currentLoadRoomData.yRi) && !IsABlockRoom(currentLoadRoomData.xRi, currentLoadRoomData.yRi))
         {
-            var roomGO = Instantiate(roomMiniMap, new Vector3(currentLoadRoomData.xRi * 3.5f, currentLoadRoomData.yRi * 2.3f), Quaternion.identity);
+            
+            var roomGO = Instantiate(room.roomMiniMap, new Vector3(currentLoadRoomData.xRi * 3.5f, currentLoadRoomData.yRi * 2.3f), Quaternion.identity);
             roomGO.transform.parent = transform;
             MiniMapRoom miniMapRoom = roomGO.GetComponent<MiniMapRoom>();
             miniMapRoom.xPos = currentLoadRoomData.xRi;
@@ -154,7 +155,14 @@ public class RoomController : MonoBehaviour
         }
         
     }
-    
+    public bool IsABlockRoom(int x, int y)
+    {
+        if(DoesRoomExist( x, y+1) && DoesRoomExist( x, y-1) && DoesRoomExist( x+1, y) && DoesRoomExist( x-1, y))
+        {
+            return true;
+        }
+        return false;
+    }
     public bool DoesRoomExist(int x, int y)
     {
         return loadedRooms.Exists(item => item.xRoom == x && item.yRoom == y);

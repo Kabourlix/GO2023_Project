@@ -441,6 +441,8 @@ MonoBehaviour:
   height: 10
   xRoom: 0
   yRoom: 0
+  roomMiniMap: {fileID: 144146870809738824, guid: b5050a772b7ee724d9405381c1a639f6,
+    type: 3}
   isMiniMapRoom: 0
   leftDoor: {fileID: 147564295}
   rightDoor: {fileID: 1023675612}

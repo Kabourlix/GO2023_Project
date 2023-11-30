@@ -356,11 +356,13 @@ MonoBehaviour:
   height: 10
   xRoom: 0
   yRoom: 0
+  roomMiniMap: {fileID: 144146870809738824, guid: 2c16d3fcb526ae6448b03a7bae14ac28,
+    type: 3}
   isMiniMapRoom: 0
-  leftDoor: {fileID: 0}
-  rightDoor: {fileID: 0}
-  topDoor: {fileID: 0}
-  bottomDoor: {fileID: 0}
+  leftDoor: {fileID: 147564295}
+  rightDoor: {fileID: 1023675612}
+  topDoor: {fileID: 1139705590}
+  bottomDoor: {fileID: 2115577237}
   doors: []
 --- !u!61 &172852685
 BoxCollider2D:

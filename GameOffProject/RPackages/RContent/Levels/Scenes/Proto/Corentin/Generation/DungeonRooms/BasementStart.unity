@@ -417,12 +417,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1311445006}
   - {fileID: 1476422512}
   - {fileID: 147564294}
   - {fileID: 1139705589}
   - {fileID: 1023675611}
   - {fileID: 2115577236}
-  - {fileID: 1311445006}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &172852684
@@ -441,6 +441,8 @@ MonoBehaviour:
   height: 10
   xRoom: 0
   yRoom: 0
+  roomMiniMap: {fileID: 144146870809738824, guid: b5050a772b7ee724d9405381c1a639f6,
+    type: 3}
   isMiniMapRoom: 0
   leftDoor: {fileID: 147564295}
   rightDoor: {fileID: 1023675612}
@@ -940,7 +942,7 @@ Transform:
   m_GameObject: {fileID: 798489136}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
-  m_LocalPosition: {x: -0.5288, y: 0.43, z: 0}
+  m_LocalPosition: {x: -0.55, y: 0.5, z: 2}
   m_LocalScale: {x: 1.09746, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -987,9 +989,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: b913bd5c982fee545a23837623e1cf61,
-    type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 969685168, guid: db97e9b49cc048c4c8f46c4aa9a8c972, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

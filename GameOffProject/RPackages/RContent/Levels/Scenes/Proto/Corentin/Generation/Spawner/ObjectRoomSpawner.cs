@@ -1,6 +1,7 @@
 
 using System;
 using PlasticGui.Configuration.CloudEdition.Welcome;
+using SDKabu.KCore;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,12 +16,13 @@ namespace Rezoskour.Content
             public SpawnerData spawnerData;
             public EnemyData enemyData;
         }
-        private EnemyManager enemyManager;
+        private IEnemyManager enemyManager;
         public GridControler grid;
         public RandomSpawner[] spawnerData;
 
         private void Start()
         {
+            enemyManager = KServiceInjection.Get<IEnemyManager>();
             //grid = GetComponentInChildren<GridControler>();
         }
         void SpawnObjects(RandomSpawner data)
@@ -33,6 +35,7 @@ namespace Rezoskour.Content
                 Vector2 randomPosition = grid.availablePoints[randomIndex];
                 grid.availablePoints.RemoveAt(randomIndex);
                 var enemy = enemyManager.SpawnEnemy(data.enemyData, randomPosition, Quaternion.identity);
+                
             }
         }
         public void InitializeObjectSpawning()
