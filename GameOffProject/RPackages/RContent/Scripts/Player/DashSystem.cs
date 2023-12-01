@@ -180,7 +180,12 @@ namespace Rezoskour.Content
             lineRenderer.positionCount = points.Length;
             lineRenderer.SetPositions(points);
         }
-
+        
+        public void CancelDash()
+        {
+            Debug.Log("Dash cancelled");
+            DashList[CurrentDashIndex].Dispose();
+        }
         #region Inputs callbacks
 
         private void OnDashUpdate(InputAction.CallbackContext _ctx)

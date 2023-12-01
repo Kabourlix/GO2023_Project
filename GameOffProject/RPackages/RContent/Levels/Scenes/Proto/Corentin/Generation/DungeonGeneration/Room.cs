@@ -90,26 +90,23 @@ public class Room : MonoBehaviour
                 case Door.DoorType.left:
                     if (!GetLeft())
                     {
-                        door.gameObject.SetActive(false);
+                        door.doorCollider.SetActive(false);
                     }
                     break;
                 case Door.DoorType.right:
                     if (!GetRight())
                     {
-                        door.gameObject.SetActive(false);
-                    }
+                        door.doorCollider.SetActive(false);                    }
                     break;
                 case Door.DoorType.top:
                     if (!GetTop())
                     {
-                        door.gameObject.SetActive(false);
-                    }
+                        door.doorCollider.SetActive(false);                    }
                     break;
                 case Door.DoorType.bottom:
                     if (!GetBottom())
                     {
-                        door.gameObject.SetActive(false);
-                    }
+                        door.doorCollider.SetActive(false);                    }
                     break;
                 default:
                     break;
@@ -123,7 +120,6 @@ public class Room : MonoBehaviour
         int tempx = xRoom + 1;
         if(RoomController.instance.DoesRoomExist(tempx, yRoom))
         {
-            Debug.Log("Room exists to the right."+ xRoom + " " + yRoom);
             return true;
         }
         return false;
@@ -133,7 +129,6 @@ public class Room : MonoBehaviour
         int tempx = xRoom - 1;
         if(RoomController.instance.DoesRoomExist(tempx, yRoom))
         {
-            Debug.Log("Room exists to the left."+ xRoom + " " + yRoom);
             return true;
         }
         return false;
@@ -176,5 +171,6 @@ public class Room : MonoBehaviour
             RoomController.instance.OnPlayerEnterRoom(this);
         }
     }
+    
     
 }

@@ -283,7 +283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1a98b59403d6d9142b2968ab3c50c63f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 620519ad1986594469ccd3f0d4b71541, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 244710117}
   - component: {fileID: 244710116}
   - component: {fileID: 244710118}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RoomController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +668,7 @@ Transform:
   m_GameObject: {fileID: 856122984}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -780,7 +780,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerTransform
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1709399090}
     - target: {fileID: 6503020210335888270, guid: 4d9f75bf8257ae34ca9978c7e1666cd9,
         type: 3}
       propertyPath: m_Name
@@ -926,6 +926,16 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 856122986}
+    - target: {fileID: 1836744096130985305, guid: d393941a19a8df14ba2347b4a6165027,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1836744096130985305, guid: d393941a19a8df14ba2347b4a6165027,
+        type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2420715332437404030, guid: d393941a19a8df14ba2347b4a6165027,
         type: 3}
       propertyPath: m_Name
@@ -986,6 +996,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d393941a19a8df14ba2347b4a6165027, type: 3}
+--- !u!4 &1709399090 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7777394860134814053, guid: d393941a19a8df14ba2347b4a6165027,
+    type: 3}
+  m_PrefabInstance: {fileID: 1614060757}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

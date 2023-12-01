@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using Rezoskour.Content;
 using Random = UnityEngine.Random;
 
 public class RoomInfo
@@ -38,11 +39,20 @@ public class RoomController : MonoBehaviour
     bool updatedRoom = false;
     
     bool bossIsSpawned = false;
+    
+    private GameObject player;
+    private DashSystem dashSystem;
     private void Awake()
     {
         instance = this;
     }
-    
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        dashSystem = player.GetComponent<DashSystem>();
+    }
+
     private void Update()
     {
         UpdateRoomQueue();
@@ -121,6 +131,7 @@ public class RoomController : MonoBehaviour
             
             var roomGO = Instantiate(room.roomMiniMap, new Vector3(currentLoadRoomData.xRi * 3.5f, currentLoadRoomData.yRi * 2.3f), Quaternion.identity);
             roomGO.transform.parent = transform;
+            roomGO.transform.position = new Vector3(currentLoadRoomData.xRi * 3.5f, currentLoadRoomData.yRi * 2.3f, -5);
             MiniMapRoom miniMapRoom = roomGO.GetComponent<MiniMapRoom>();
             miniMapRoom.xPos = currentLoadRoomData.xRi;
             miniMapRoom.yPos = currentLoadRoomData.yRi;
@@ -183,6 +194,7 @@ public class RoomController : MonoBehaviour
     }
     public void OnPlayerEnterRoom(Room room)
     {
+        dashSystem.CancelDash();
         CameraController.instance.currentRoom = room;
         currentRoom = room;
         UpdateMiniMap();
