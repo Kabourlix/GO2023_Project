@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 172852683}
   - component: {fileID: 172852684}
   - component: {fileID: 172852685}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -683,7 +683,7 @@ GameObject:
   m_Component:
   - component: {fileID: 481419492}
   - component: {fileID: 481419494}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -760,7 +760,7 @@ GameObject:
   m_Component:
   - component: {fileID: 503534411}
   - component: {fileID: 503534413}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -837,7 +837,7 @@ GameObject:
   m_Component:
   - component: {fileID: 727649448}
   - component: {fileID: 727649450}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1612,7 +1612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1269120001}
   - component: {fileID: 1269120003}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1689,7 +1689,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1311445006}
   - component: {fileID: 1311445005}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1765,7 +1765,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1476422512}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SideWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1802,7 +1802,7 @@ GameObject:
   - component: {fileID: 1732950663}
   - component: {fileID: 1732950665}
   - component: {fileID: 1732950664}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

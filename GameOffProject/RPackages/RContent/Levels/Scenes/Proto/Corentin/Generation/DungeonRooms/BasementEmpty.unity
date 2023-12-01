@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 172852683}
   - component: {fileID: 172852684}
   - component: {fileID: 172852685}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 205202180}
   - component: {fileID: 205202181}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RightDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 444274479}
   - component: {fileID: 444274480}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 481419492}
   - component: {fileID: 481419494}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -412,7 +412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 503534411}
   - component: {fileID: 503534413}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 506315330}
   - component: {fileID: 506315331}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -534,7 +534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 513419567}
   - component: {fileID: 513419568}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DoorB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -612,7 +612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 727649448}
   - component: {fileID: 727649450}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -689,7 +689,7 @@ GameObject:
   m_Component:
   - component: {fileID: 814551809}
   - component: {fileID: 814551810}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DoorL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -767,7 +767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 877537849}
   - component: {fileID: 877537850}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -812,7 +812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 894078592}
   - component: {fileID: 894078593}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -857,7 +857,7 @@ GameObject:
   m_Component:
   - component: {fileID: 965159496}
   - component: {fileID: 965159497}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -903,7 +903,7 @@ GameObject:
   - component: {fileID: 1229510374}
   - component: {fileID: 1229510376}
   - component: {fileID: 1229510375}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BottomDoorBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1084,7 +1084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1269120001}
   - component: {fileID: 1269120003}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1161,7 +1161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1326257912}
   - component: {fileID: 1326257913}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DoorT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1240,7 +1240,7 @@ GameObject:
   - component: {fileID: 1381581839}
   - component: {fileID: 1381581841}
   - component: {fileID: 1381581840}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: leftDoorBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1420,7 +1420,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1476422512}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SideWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1456,7 +1456,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1545244597}
   - component: {fileID: 1545244598}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BottomDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1504,7 +1504,7 @@ GameObject:
   - component: {fileID: 1654918872}
   - component: {fileID: 1654918874}
   - component: {fileID: 1654918873}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3563,7 +3563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1725314534}
   - component: {fileID: 1725314535}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3608,7 +3608,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1760638364}
   - component: {fileID: 1760638365}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LeftDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3655,7 +3655,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1837604550}
   - component: {fileID: 1837604551}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DoorR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3734,7 +3734,7 @@ GameObject:
   - component: {fileID: 1888515520}
   - component: {fileID: 1888515522}
   - component: {fileID: 1888515521}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: rightDoorBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3916,7 +3916,7 @@ GameObject:
   - component: {fileID: 2146796215}
   - component: {fileID: 2146796217}
   - component: {fileID: 2146796216}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopDoorBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
